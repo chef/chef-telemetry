@@ -1,3 +1,4 @@
+require "telemetry/client"
 require "telemetry/decision"
 require "telemetry/event"
 require "telemetry/session"
