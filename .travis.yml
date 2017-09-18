@@ -1,5 +1,6 @@
 sudo: false
 language: ruby
+gemfile: gems.rb
 
 before_install:
   - gem install bundler
