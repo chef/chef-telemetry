@@ -9,7 +9,8 @@ class Telemetry
 
     class << self
       def opt_out?
-        user_opted_out? || env_opt_out? || local_opt_out?
+        # We check that the user has made a decision so that we can have a default setting for robots
+        user_opted_out? || env_opt_out? || local_opt_out? || !made?
       end
 
       # Check whether the user has made an explicit decision on their participation.
@@ -50,7 +51,7 @@ class Telemetry
               ENV["PWD"]
             end || Dir.pwd
 
-            a
+        a
       end
 
       private

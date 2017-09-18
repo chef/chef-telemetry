@@ -41,6 +41,14 @@ RSpec.describe Telemetry::Decision do
   end
 
   describe "#opt_out?" do
+    before do
+      %w{ / /path/ /path/to/ /path/to/cwd/ }.each do |pth|
+        allow(File).to receive(:exist?).with("#{pth}.chef/telemetry_opt_out").and_return false
+      end
+      allow(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_out").and_return false
+      allow(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_in").and_return false
+    end
+
     it "is true if the user has opted out globally" do
       expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_out").and_return true
       expect(subject.opt_out?).to be true
@@ -52,12 +60,17 @@ RSpec.describe Telemetry::Decision do
     end
 
     it "is true if the user has opted out locally" do
-      expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_out").and_return true
+      expect(File).to receive(:exist?).with("/path/to/cwd/.chef/telemetry_opt_out").and_return true
       expect(subject.opt_out?).to be true
     end
 
-    it "is false by default" do
+    it "is false if the user has opted in" do
+      expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_in").and_return true
       expect(subject.opt_out?).to be false
+    end
+
+    it "is true by default" do
+      expect(subject.opt_out?).to be true
     end
   end
 
