@@ -1,4 +1,5 @@
 require "telemetry/decision"
+require "telemetry/session"
 require "telemetry/version"
 
 class Telemetry
