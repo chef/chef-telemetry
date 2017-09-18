@@ -44,6 +44,8 @@ class Telemetry
         found
       end
 
+      private
+
       def working_directory
         a = if ChefConfig.windows?
               ENV["CD"]
@@ -53,8 +55,6 @@ class Telemetry
 
         a
       end
-
-      private
 
       def home
         ChefConfig::PathHelper.home(".chef")
