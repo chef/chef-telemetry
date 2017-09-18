@@ -21,7 +21,7 @@ RSpec.describe Telemetry do
       end
 
       it "using an environment key" do
-        env["CHEF_TELEMETRY_OPT_OUT"] = endpoint
+        env["CHEF_TELEMETRY_ENDPOINT"] = endpoint
         expect(Telemetry::Client).to receive(:new).with(endpoint)
         subject.client
       end
