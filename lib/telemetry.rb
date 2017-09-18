@@ -1,4 +1,5 @@
 require "telemetry/decision"
+require "telemetry/event"
 require "telemetry/session"
 require "telemetry/version"
 
