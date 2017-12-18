@@ -14,7 +14,7 @@ class Telemetry
   def deliver(data = {})
     unless opt_out?
       payload = event.prepare(data)
-      client.async.fire(payload)
+      client.await.fire(payload)
     end
   end
 
