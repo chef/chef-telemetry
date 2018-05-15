@@ -2,6 +2,8 @@ require "spec_helper"
 
 RSpec.describe Telemetry::Event do
   let(:product) { "unit" }
+  let(:product_version) { "1.0.0" }
+  let(:install_context) { "omnibus" }
   let(:session_id) { "A-NEW-UUID" }
   let(:session) { double("Session", id: session_id) }
   let(:origin) { "rspec" }
@@ -21,7 +23,7 @@ RSpec.describe Telemetry::Event do
 
   describe "#prepare" do
     subject do
-      e = Telemetry::Event.new(product, session, origin)
+      e = Telemetry::Event.new(product, session, origin, install_context, product_version)
       e.prepare(event)
     end
 
