@@ -9,11 +9,15 @@ class Telemetry
       type:  "track",
     }.freeze
 
-    attr_reader :session, :product, :origin
-    def initialize(product, session, origin = "command-line")
+    attr_reader :session, :product, :origin,
+      :product_version, :install_context
+    def initialize(product, session, origin = "command-line",
+                   install_context = "omnibus", product_version = "0.0.0")
       @product = product
       @session = session
       @origin = origin
+      @product_version = product_version
+      @install_context = install_context
     end
 
     def prepare(event)
@@ -24,6 +28,8 @@ class Telemetry
         b[:session_id] = session.id
         b[:origin] = origin
         b[:product] = product
+        b[:product_version] = product_version
+        b[:install_context] = install_context
         b[:timestamp] = time
         b[:payload] = event
       end
