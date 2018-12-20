@@ -3,7 +3,7 @@ require "rspec/core/rake_task"
 
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => [:spec, :style]
+task default: [:spec, :style]
 
 begin
   require "chefstyle"
