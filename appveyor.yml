@@ -11,15 +11,11 @@ branches:
   only:
     - master
 
-# caching vendor/bundle appears to break horribly in the face of gems checked out of git
-# cache:
-#   - vendor/bundle
-
 install:
   - ps: iex (irm https://omnitruck.chef.io/install.ps1); Install-Project -Project chefdk -channel stable
   - bundle config --local path vendor/bundle
   - SET CI=true
-  - SET BUNDLE_WITHOUT=changelog:style
+  - SET BUNDLE_WITHOUT=docs:debug
 
 build_script:
   - ps: c:\opscode\chefdk\bin\chef.bat shell-init powershell | iex
