@@ -4,8 +4,8 @@ require "chef-config/windows"
 # Decision allows us to inspect whether the user has made a decision to opt in or opt out of telemetry.
 class Telemetry
   module Decision
-    OPT_OUT_FILE = "telemetry_opt_out"
-    OPT_IN_FILE = "telemetry_opt_in"
+    OPT_OUT_FILE = "telemetry_opt_out".freeze
+    OPT_IN_FILE = "telemetry_opt_in".freeze
 
     class << self
       def opt_out?
