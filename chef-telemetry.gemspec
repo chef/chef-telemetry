@@ -6,21 +6,15 @@ require "telemetry/version"
 Gem::Specification.new do |spec|
   spec.name          = "chef-telemetry"
   spec.version       = Telemetry::VERSION
-
-  spec.email = "info@chef.io"
-  spec.homepage = "https://www.chef.io"
-  spec.license = "Apache-2.0"
-  spec.authors = ["Chef Software, Inc."]
-  spec.summary       = %q{Send user actions to the Chef telemetry system. See RFC-xxx for further information}
-
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
-  end
+  spec.authors       = ["Chef Software, Inc."]
+  spec.email         = "info@chef.io"
+  spec.homepage      = "https://github.com/chef/chef-telemetry"
+  spec.license       = "Apache-2.0"
+  spec.summary       = %q{Send user actions to the Chef telemetry system. See Chef RFC-051 for further information}
+  spec.files         = %w{LICENSE} + Dir.glob("lib/**/*")
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.15"
-  spec.add_development_dependency "rake", "~> 11.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_dependency "http", "~> 2.2"
   spec.add_dependency "ffi-yajl", "~> 2.2"
   spec.add_dependency "concurrent-ruby", "~> 1.0"
