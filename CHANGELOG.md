@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 0.1.6 -->
-## [v0.1.6](https://github.com/chef/chef-telemetry/tree/v0.1.6) (2018-12-20)
+<!-- latest_release 0.1.7 -->
+## [v0.1.7](https://github.com/chef/chef-telemetry/tree/v0.1.7) (2018-12-21)
 
 #### Merged Pull Requests
-- Update the readme to include badges, valid dev docs, and license information [#9](https://github.com/chef/chef-telemetry/pull/9) ([tas50](https://github.com/tas50))
+- Use our standard rakefile for testing [#10](https://github.com/chef/chef-telemetry/pull/10) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
 <!-- release_rollup since=0.1.0 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Use our standard rakefile for testing [#10](https://github.com/chef/chef-telemetry/pull/10) ([tas50](https://github.com/tas50)) <!-- 0.1.7 -->
 - Update the readme to include badges, valid dev docs, and license information [#9](https://github.com/chef/chef-telemetry/pull/9) ([tas50](https://github.com/tas50)) <!-- 0.1.6 -->
 - Only ship the necessary libs in the gem and update the gemspec a bit [#8](https://github.com/chef/chef-telemetry/pull/8) ([tas50](https://github.com/tas50)) <!-- 0.1.5 -->
 - Remove gems.rb and fixup the appveyor config [#7](https://github.com/chef/chef-telemetry/pull/7) ([tas50](https://github.com/tas50)) <!-- 0.1.4 -->
