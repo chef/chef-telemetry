@@ -1,9 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release -->
+<!-- latest_release 0.1.8 -->
+## [v0.1.8](https://github.com/chef/chef-telemetry/tree/v0.1.8) (2019-01-16)
+
+#### Merged Pull Requests
+- Unpin bundler dev dep [#11](https://github.com/chef/chef-telemetry/pull/11) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=0.1.7 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Unpin bundler dev dep [#11](https://github.com/chef/chef-telemetry/pull/11) ([tas50](https://github.com/tas50)) <!-- 0.1.8 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
@@ -18,4 +26,3 @@
 - Update the readme to include badges, valid dev docs, and license information [#9](https://github.com/chef/chef-telemetry/pull/9) ([tas50](https://github.com/tas50))
 - Use our standard rakefile for testing [#10](https://github.com/chef/chef-telemetry/pull/10) ([tas50](https://github.com/tas50))
 <!-- latest_stable_release -->
-
