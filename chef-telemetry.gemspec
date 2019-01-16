@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.files         = %w{LICENSE} + Dir.glob("lib/**/*")
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.15"
+  spec.add_development_dependency "bundler"
   spec.add_dependency "http", "~> 2.2"
   spec.add_dependency "ffi-yajl", "~> 2.2"
   spec.add_dependency "concurrent-ruby", "~> 1.0"
