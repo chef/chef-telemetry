@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 0.1.9 -->
-## [v0.1.9](https://github.com/chef/chef-telemetry/tree/v0.1.9) (2019-08-07)
+<!-- latest_release 0.1.10 -->
+## [v0.1.10](https://github.com/chef/chef-telemetry/tree/v0.1.10) (2019-08-07)
 
 #### Merged Pull Requests
-- Test PRs with buildkite [#12](https://github.com/chef/chef-telemetry/pull/12) ([tas50](https://github.com/tas50))
+- Chefstyle fixes + remove appveyor / travis configs [#13](https://github.com/chef/chef-telemetry/pull/13) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
 <!-- release_rollup since=0.1.8 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Chefstyle fixes + remove appveyor / travis configs [#13](https://github.com/chef/chef-telemetry/pull/13) ([tas50](https://github.com/tas50)) <!-- 0.1.10 -->
 - Test PRs with buildkite [#12](https://github.com/chef/chef-telemetry/pull/12) ([tas50](https://github.com/tas50)) <!-- 0.1.9 -->
 <!-- release_rollup -->
 
