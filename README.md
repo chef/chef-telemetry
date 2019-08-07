@@ -2,6 +2,14 @@
 [![Gem Version](https://badge.fury.io/rb/chef-telemetry.svg)](https://rubygems.org/gems/chef-telemetry)
 [![Build Status](https://travis-ci.org/chef/chef-telemetry.svg?branch=master)](https://travis-ci.org/chef/chef-telemetry)
 
+**Umbrella Project**: [Chef Foundation](https://github.com/chef/chef-oss-practices/blob/master/projects/chef-foundation.md)
+
+**Project State**: [Active](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md#active)
+
+**Issues [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md)**: 14 days
+
+**Pull Request [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md)**: 14 days
+
 A gem to send telemetry data per Chef's [RFC-051](https://github.com/chef/chef-rfc/blob/master/rfc051-telemetry.md)
 
 ## Installation
