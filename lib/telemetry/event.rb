@@ -6,13 +6,13 @@ class Telemetry
       message_version: 1.0,
       payload_version: 1.0,
       license_id: "00000000-0000-0000-0000-000000000000",
-      type:  "track",
+      type: "track",
     }.freeze
 
     attr_reader :session, :product, :origin,
       :product_version, :install_context
     def initialize(product, session, origin = "command-line",
-                   install_context = "omnibus", product_version = "0.0.0")
+      install_context = "omnibus", product_version = "0.0.0")
       @product = product
       @session = session
       @origin = origin
