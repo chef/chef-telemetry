@@ -1,6 +1,7 @@
 # Chef::Telemetry
+
 [![Gem Version](https://badge.fury.io/rb/chef-telemetry.svg)](https://rubygems.org/gems/chef-telemetry)
-[![Build Status](https://travis-ci.org/chef/chef-telemetry.svg?branch=master)](https://travis-ci.org/chef/chef-telemetry)
+[![Build status](https://badge.buildkite.com/7eede2e516f4a2db2fa0091f39f60da51dd44d37e27fab9fc2.svg?branch=master)](https://buildkite.com/chef-oss/chef-chef-telemetry-master-verify)
 
 **Umbrella Project**: [Chef Foundation](https://github.com/chef/chef-oss-practices/blob/master/projects/chef-foundation.md)
 
@@ -32,7 +33,7 @@ Or install it yourself as:
 
 All documentation is written using YARD. You can generate a by running:
 
-```
+```shell
 rake docs
 ```
 
@@ -42,7 +43,7 @@ For information on contributing to this project please see our [Contributing Doc
 
 ## License & Copyright
 
-- Copyright:: Copyright (c) 2018 Chef Software, Inc.
+- Copyright:: Copyright (c) 2018-2019 Chef Software, Inc.
 - License:: Apache License, Version 2.0
 
 ```text
