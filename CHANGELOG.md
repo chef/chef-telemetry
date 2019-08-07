@@ -1,9 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release -->
+<!-- latest_release 0.1.9 -->
+## [v0.1.9](https://github.com/chef/chef-telemetry/tree/v0.1.9) (2019-08-07)
+
+#### Merged Pull Requests
+- Test PRs with buildkite [#12](https://github.com/chef/chef-telemetry/pull/12) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=0.1.8 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Test PRs with buildkite [#12](https://github.com/chef/chef-telemetry/pull/12) ([tas50](https://github.com/tas50)) <!-- 0.1.9 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
