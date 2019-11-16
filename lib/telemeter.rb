@@ -112,7 +112,7 @@ require "yaml"
         begin
           File.read(config[:installation_identifier_file]).chomp
         rescue
-          ChefCore::Log.info "could not read #{config[:installation_identifier_file]} - using default id"
+          Telemeter::Log.info "could not read #{config[:installation_identifier_file]} - using default id"
           DEFAULT_INSTALLATION_GUID
         end
     end

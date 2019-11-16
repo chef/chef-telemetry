@@ -99,7 +99,7 @@ RSpec.describe ChefCore::Telemeter::Sender do
     context "when an error occurrs" do
       it "logs it" do
         allow(ChefCore::Telemeter).to receive(:enabled?).and_raise("Failed")
-        expect(ChefCore::Log).to receive(:fatal)
+        expect(Telemeter::Log).to receive(:fatal)
         subject.run
       end
     end
