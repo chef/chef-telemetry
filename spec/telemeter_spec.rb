@@ -16,7 +16,7 @@
 #
 
 require "spec_helper"
-require "chef_core/telemeter"
+require "telemeter"
 
 RSpec.describe ChefCore::Telemeter do
   subject { ChefCore::Telemeter.instance }

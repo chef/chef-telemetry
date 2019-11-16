@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 
+require "telemetry/version"
 require "benchmark"
 require "forwardable"
 require "singleton"
@@ -22,8 +23,6 @@ require "json"
 require "digest/sha1"
 require "securerandom"
 require "yaml"
-
-module ChefCore
 
   # This definites the Telemeter interface. Implementation thoughts for
   # when we unstub it:
@@ -139,8 +138,8 @@ module ChefCore
     end
 
     def convert_events_to_session
-      YAML.dump({ "version" => ChefCore::VERSION,
-                  "entries" => @events_to_send })
+      YAML.dump("version" => Telemetry::VERSION,
+                "entries" => @events_to_send)
     end
 
     def write_session(session)
@@ -159,4 +158,7 @@ module ChefCore
     end
 
   end
+
+module ChefCore
+  Telemeter = ::Telemeter
 end

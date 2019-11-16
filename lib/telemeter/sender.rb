@@ -16,13 +16,18 @@
 #
 
 require "telemetry"
-require "chef_core/telemeter"
-require "chef_core/telemeter/patch"
-require "chef_core/log"
-require "chef_core/version"
+require "telemeter"
+require "telemeter/patch"
+require "logger"
 
 module ChefCore
+  logger = ::Logger.new(STDERR)
+  logger.level = Logger::WARN
+  const_set :Log, logger # rubocop:disable not working?!?
+end
+
   class Telemeter
+
     class Sender
       attr_reader :session_files, :config
 
@@ -120,4 +125,3 @@ module ChefCore
       end
     end
   end
-end
