@@ -51,7 +51,7 @@ require "logger"
       end
 
       def run
-        if ChefCore::Telemeter.enabled?
+        if Telemeter.enabled?
           Telemeter::Log.info("Telemetry enabled, beginning upload of previous session(s)")
           # dev mode telemetry gets sent to a different location
 

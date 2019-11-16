@@ -18,8 +18,8 @@
 require "spec_helper"
 require "telemeter"
 
-RSpec.describe ChefCore::Telemeter do
-  subject { ChefCore::Telemeter.instance }
+RSpec.describe Telemeter do
+  subject { Telemeter.instance }
   let(:host_platform) { "linux" }
   let(:enabled_flag) { false }
   let(:dev_mode) { false }

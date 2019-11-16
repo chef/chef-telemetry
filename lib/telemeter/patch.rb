@@ -17,7 +17,7 @@
 
 class Telemetry
   def dead_deliver(data = {}) # this breaks telemetry tests
-    if ChefCore::Telemeter.instance.enabled?
+    if Telemeter.instance.enabled?
       payload = event.prepare(data)
       client.await.fire(payload)
     end

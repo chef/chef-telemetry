@@ -158,7 +158,3 @@ require "yaml"
     end
 
   end
-
-module ChefCore
-  Telemeter = ::Telemeter
-end
