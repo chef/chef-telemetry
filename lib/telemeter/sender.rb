@@ -17,7 +17,6 @@
 
 require "telemetry"
 require "telemeter"
-require "telemeter/patch"
 require "logger"
 
 class Telemeter
