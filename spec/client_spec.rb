@@ -1,5 +1,7 @@
 require "spec_helper"
 
+include Chef # TODO: remove
+
 RSpec.describe Telemetry::OptOutClient do
   it "should do nothing" do
     expect(subject.fire("fire!")).to be nil

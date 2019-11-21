@@ -18,6 +18,8 @@
 require "spec_helper"
 require "chef/telemeter"
 
+include Chef # TODO: remove
+
 RSpec.describe Telemeter do
   subject { Telemeter.instance }
   let(:host_platform) { "linux" }

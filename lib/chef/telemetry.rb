@@ -43,5 +43,3 @@ class Telemetry
   end
 end
 end # Chef
-
-Telemetry = Chef::Telemetry # TODO: remove
