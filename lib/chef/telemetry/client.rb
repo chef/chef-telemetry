@@ -1,6 +1,7 @@
 require "http"
 require "concurrent"
 
+module Chef
 class Telemetry
   class Client
     include Concurrent::Async
@@ -21,4 +22,5 @@ class Telemetry
   class OptOutClient
     def fire(_); end
   end
+end
 end

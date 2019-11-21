@@ -1,3 +1,4 @@
+module Chef
 class Telemetry
   class Event
 
@@ -39,4 +40,5 @@ class Telemetry
       Time.now.utc.strftime("%FT%TZ")
     end
   end
+end
 end
