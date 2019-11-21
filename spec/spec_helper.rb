@@ -1,6 +1,6 @@
 require "bundler/setup"
-require "telemetry"
-require "telemeter"
+require "chef/telemetry"
+require "chef/telemeter"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

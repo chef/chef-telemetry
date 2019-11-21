@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 
-require "telemetry"
-require "telemeter"
+require "chef/telemetry"
+require "chef/telemeter"
 require "logger"
 
 class Telemeter

@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-require "telemetry/version"
+require "chef/telemetry/version"
 require "benchmark"
 require "forwardable"
 require "singleton"
@@ -56,7 +56,7 @@ class Telemeter
   end
 
   def enabled?
-    require "telemetry/decision"
+    require "chef/telemetry/decision"
     config[:enabled] && !Telemetry::Decision.env_opt_out?
   end
 
