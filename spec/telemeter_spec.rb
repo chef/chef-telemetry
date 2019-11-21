@@ -16,7 +16,7 @@
 #
 
 require "spec_helper"
-require "telemeter"
+require "chef/telemeter"
 
 RSpec.describe Telemeter do
   subject { Telemeter.instance }

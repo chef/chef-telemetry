@@ -36,7 +36,8 @@ class Telemetry
         (full_path.length - 1).downto(0) do |i|
           candidate = File.join(full_path[0..i], ".chef", OPT_OUT_FILE)
           if File.exist?(candidate)
-            puts "Found opt out at: #{candidate}"
+            # TODO: push up logging
+            # Log.info "Found opt out at: #{candidate}"
             found = true
             break
           end

@@ -1,8 +1,8 @@
-require "telemetry/client"
-require "telemetry/decision"
-require "telemetry/event"
-require "telemetry/session"
-require "telemetry/version"
+require "chef/telemetry/client"
+require "chef/telemetry/decision"
+require "chef/telemetry/event"
+require "chef/telemetry/session"
+require "chef/telemetry/version"
 
 class Telemetry
   attr_accessor :product, :origin, :product_version, :install_context

@@ -16,7 +16,7 @@
 #
 
 require "spec_helper"
-require "telemeter/sender"
+require "chef/telemeter/sender"
 
 RSpec.describe Telemeter::Sender do
   let(:session_files) { %w{file1 file2} }
