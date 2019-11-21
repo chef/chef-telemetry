@@ -20,9 +20,9 @@ require "telemeter"
 require "logger"
 
 class Telemeter
-  logger = ::Logger.new(STDERR)
-  logger.level = Logger::WARN
-  const_set :Log, logger # rubocop:disable not working?!?
+  logger = ::Logger.new(STDERR) # TODO: maybe switch to file, maybe switch to mixlib
+  logger.level = Logger::ERROR
+  Log = logger # rubocop:disable Naming/ConstantName
 
   class Sender
     attr_reader :session_files, :config
