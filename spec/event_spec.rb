@@ -1,5 +1,7 @@
 require "spec_helper"
 
+include Chef # TODO: remove
+
 RSpec.describe Telemetry::Event do
   let(:product) { "unit" }
   let(:product_version) { "1.0.0" }

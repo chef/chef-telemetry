@@ -18,6 +18,8 @@
 require "spec_helper"
 require "chef/telemeter/sender"
 
+include Chef # TODO: remove
+
 RSpec.describe Telemeter::Sender do
   let(:session_files) { %w{file1 file2} }
   let(:enabled_flag) { true }

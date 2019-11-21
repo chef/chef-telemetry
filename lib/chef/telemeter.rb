@@ -160,5 +160,3 @@ class Telemeter
 
 end
 end # Chef
-
-Telemeter = Chef::Telemeter # TODO: remove

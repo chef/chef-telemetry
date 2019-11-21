@@ -1,5 +1,7 @@
 require "spec_helper"
 
+include Chef # TODO: remove
+
 RSpec.describe Telemetry do
   let(:payload) do
     {

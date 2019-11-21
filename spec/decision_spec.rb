@@ -1,5 +1,7 @@
 require "spec_helper"
 
+include Chef # TODO: remove
+
 RSpec.describe Telemetry::Decision do
   let(:env) { {} }
   let(:env_pwd) { "/path/to/cwd" }

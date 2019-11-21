@@ -1,5 +1,7 @@
 require "spec_helper"
 
+include Chef # TODO: remove
+
 RSpec.describe Telemetry::Session do
   let(:home) { "/Users/chef_user" }
   let(:session_path) { "/Users/chef_user/.chef/TELEMETRY_SESSION_ID" }
