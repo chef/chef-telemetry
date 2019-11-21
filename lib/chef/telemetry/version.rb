@@ -1,5 +1,5 @@
 module Chef
-class Telemetry
-  VERSION = "0.1.11".freeze
-end
+  class Telemetry
+    VERSION = "0.1.11".freeze
+  end
 end
