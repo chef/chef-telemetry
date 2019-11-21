@@ -1,14 +1,12 @@
 require "spec_helper"
 
-include Chef # TODO: remove
-
-RSpec.describe Telemetry::OptOutClient do
+RSpec.describe Chef::Telemetry::OptOutClient do
   it "should do nothing" do
     expect(subject.fire("fire!")).to be nil
   end
 end
 
-RSpec.describe Telemetry::Client do
+RSpec.describe Chef::Telemetry::Client do
 
   let(:telemetry_endpoint) { "https://my.telemetry.endpoint" }
   let(:event) { {} }
@@ -16,7 +14,7 @@ RSpec.describe Telemetry::Client do
 
   it "initializes the http client" do
     expect(HTTP).to receive(:persistent).with(telemetry_endpoint)
-    Telemetry::Client.new(telemetry_endpoint)
+    Chef::Telemetry::Client.new(telemetry_endpoint)
   end
 
   it "sends an event" do

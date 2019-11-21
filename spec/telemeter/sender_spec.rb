@@ -18,9 +18,7 @@
 require "spec_helper"
 require "chef/telemeter/sender"
 
-include Chef # TODO: remove
-
-RSpec.describe Telemeter::Sender do
+RSpec.describe Chef::Telemeter::Sender do
   let(:session_files) { %w{file1 file2} }
   let(:enabled_flag) { true }
   let(:dev_mode) { false }
@@ -32,24 +30,24 @@ RSpec.describe Telemeter::Sender do
       dev_mode: dev_mode,
     }
   end
-  let(:subject) { Telemeter::Sender.new(session_files, config) }
+  let(:subject) { Chef::Telemeter::Sender.new(session_files, config) }
 
   before do
     allow(subject).to receive(:config).and_return(config)
-    allow(Telemeter).to receive(:enabled?).and_return enabled_flag
+    allow(Chef::Telemeter).to receive(:enabled?).and_return enabled_flag
     # Ensure this is not set for each test since we have tested behavior
     # based on presence of this variable.
     ENV.delete("CHEF_TELEMETRY_ENDPOINT")
   end
 
   describe "::start_upload_thread" do
-    let(:sender_mock) { instance_double(Telemeter::Sender) }
+    let(:sender_mock) { instance_double(Chef::Telemeter::Sender) }
     it "spawns a thread to run the send" do
-      expect(Telemeter::Sender).to receive(:find_session_files).and_return session_files
-      expect(Telemeter::Sender).to receive(:new).with(session_files, config).and_return sender_mock
+      expect(Chef::Telemeter::Sender).to receive(:find_session_files).and_return session_files
+      expect(Chef::Telemeter::Sender).to receive(:new).with(session_files, config).and_return sender_mock
       expect(sender_mock).to receive(:run)
       expect(::Thread).to receive(:new).and_yield
-      Telemeter::Sender.start_upload_thread(config)
+      Chef::Telemeter::Sender.start_upload_thread(config)
     end
   end
 
@@ -100,8 +98,8 @@ RSpec.describe Telemeter::Sender do
 
     context "when an error occurrs" do
       it "logs it" do
-        allow(Telemeter).to receive(:enabled?).and_raise("Failed")
-        expect(Telemeter::Log).to receive(:fatal)
+        allow(Chef::Telemeter).to receive(:enabled?).and_raise("Failed")
+        expect(Chef::Telemeter::Log).to receive(:fatal)
         subject.run
       end
     end
@@ -110,7 +108,7 @@ RSpec.describe Telemeter::Sender do
   describe "::find_session_files" do
     it "finds all telemetry-payload-*.yml files in the telemetry directory" do
       expect(Dir).to receive(:glob).with("/tmp/telemeter-test/payloads/telemetry-payload-*.yml").and_return []
-      Telemeter::Sender.find_session_files(config)
+      Chef::Telemeter::Sender.find_session_files(config)
     end
   end
 
@@ -126,7 +124,7 @@ RSpec.describe Telemeter::Sender do
     let(:telemetry) { instance_double("telemetry") }
     it "removes the telemetry session file and starts a new session, then submits each entry in the session" do
       expect(FileUtils).to receive(:rm_rf).with(config[:session_file])
-      expect(Telemetry).to receive(:new).and_return telemetry
+      expect(Chef::Telemetry).to receive(:new).and_return telemetry
       expect(subject).to receive(:submit_entry).with(telemetry, { "event" => "action1" }, 1, 2)
       expect(subject).to receive(:submit_entry).with(telemetry, { "event" => "action2" }, 2, 2)
       subject.submit_session( { "version" => "1.0.0",
