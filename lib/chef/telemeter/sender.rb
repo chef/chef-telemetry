@@ -19,6 +19,7 @@ require "chef/telemetry"
 require "chef/telemeter"
 require "logger"
 
+module Chef
 class Telemeter
   logger = ::Logger.new(STDERR) # TODO: maybe switch to file, maybe switch to mixlib
   logger.level = Logger::ERROR
@@ -121,3 +122,4 @@ class Telemeter
     end
   end
 end
+end # Chef

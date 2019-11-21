@@ -2,6 +2,7 @@ require "chef-config/path_helper"
 require "chef-config/windows"
 
 # Decision allows us to inspect whether the user has made a decision to opt in or opt out of telemetry.
+module Chef
 class Telemetry
   module Decision
     OPT_OUT_FILE = "telemetry_opt_out".freeze
@@ -63,3 +64,4 @@ class Telemetry
     end
   end
 end
+end # Chef

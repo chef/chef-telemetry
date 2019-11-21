@@ -5,7 +5,7 @@ require "chef/telemetry/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "chef-telemetry"
-  spec.version       = Telemetry::VERSION
+  spec.version       = Chef::Telemetry::VERSION
   spec.authors       = ["Chef Software, Inc."]
   spec.email         = "info@chef.io"
   spec.homepage      = "https://github.com/chef/chef-telemetry"
