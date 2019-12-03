@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 0.1.12 -->
-## [v0.1.12](https://github.com/chef/chef-telemetry/tree/v0.1.12) (2019-11-22)
+<!-- latest_release unreleased -->
+## Unreleased
 
 #### Merged Pull Requests
-- Changes to my previous PR per post-merge review [#17](https://github.com/chef/chef-telemetry/pull/17) ([zenspider](https://github.com/zenspider))
+- Adding ruby 2.7 testing [#21](https://github.com/chef/chef-telemetry/pull/21) ([zenspider](https://github.com/zenspider))
 <!-- latest_release -->
 
 <!-- release_rollup since=0.1.8 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Adding ruby 2.7 testing [#21](https://github.com/chef/chef-telemetry/pull/21) ([zenspider](https://github.com/zenspider)) <!-- 0.1.12 -->
 - Changes to my previous PR per post-merge review [#17](https://github.com/chef/chef-telemetry/pull/17) ([zenspider](https://github.com/zenspider)) <!-- 0.1.12 -->
 - Moved telemeter from chef-core to chef-telemetry. [#16](https://github.com/chef/chef-telemetry/pull/16) ([zenspider](https://github.com/zenspider)) <!-- 0.1.11 -->
 - Chefstyle fixes + remove appveyor / travis configs [#13](https://github.com/chef/chef-telemetry/pull/13) ([tas50](https://github.com/tas50)) <!-- 0.1.10 -->
