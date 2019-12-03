@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Telemetry::Session do
+RSpec.describe Chef::Telemetry::Session do
   let(:home) { "/Users/chef_user" }
   let(:session_path) { "/Users/chef_user/.chef/TELEMETRY_SESSION_ID" }
   let(:new_uuid) { "NEW-UUID" }

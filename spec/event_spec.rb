@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Telemetry::Event do
+RSpec.describe Chef::Telemetry::Event do
   let(:product) { "unit" }
   let(:product_version) { "1.0.0" }
   let(:install_context) { "omnibus" }
@@ -23,7 +23,7 @@ RSpec.describe Telemetry::Event do
 
   describe "#prepare" do
     subject do
-      e = Telemetry::Event.new(product, session, origin, install_context, product_version)
+      e = Chef::Telemetry::Event.new(product, session, origin, install_context, product_version)
       e.prepare(event)
     end
 

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Telemetry do
+RSpec.describe Chef::Telemetry do
   let(:payload) do
     {
       properties: {},
@@ -16,13 +16,13 @@ RSpec.describe Telemetry do
 
     describe "creates a new client" do
       it "with the default endpoint" do
-        expect(Telemetry::Client).to receive(:new).with(Telemetry::Client::TELEMETRY_ENDPOINT)
+        expect(Chef::Telemetry::Client).to receive(:new).with(Chef::Telemetry::Client::TELEMETRY_ENDPOINT)
         subject.client
       end
 
       it "using an environment key" do
         env["CHEF_TELEMETRY_ENDPOINT"] = endpoint
-        expect(Telemetry::Client).to receive(:new).with(endpoint)
+        expect(Chef::Telemetry::Client).to receive(:new).with(endpoint)
         subject.client
       end
     end
@@ -30,7 +30,7 @@ RSpec.describe Telemetry do
 
   describe "opted in" do
     before do
-      expect(Telemetry::Decision).to receive(:opt_out?).and_return(false)
+      expect(Chef::Telemetry::Decision).to receive(:opt_out?).and_return(false)
     end
 
     it "sends an event" do
@@ -41,7 +41,7 @@ RSpec.describe Telemetry do
 
   describe "opted out" do
     before do
-      expect(Telemetry::Decision).to receive(:opt_out?).and_return(true)
+      expect(Chef::Telemetry::Decision).to receive(:opt_out?).and_return(true)
     end
 
     it "doesn't send an event" do

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Telemetry::Decision do
+RSpec.describe Chef::Telemetry::Decision do
   let(:env) { {} }
   let(:env_pwd) { "/path/to/cwd" }
   let(:home) { "/Users/chef_user" }

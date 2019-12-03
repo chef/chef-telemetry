@@ -16,10 +16,10 @@
 #
 
 require "spec_helper"
-require "telemeter"
+require "chef/telemeter"
 
-RSpec.describe Telemeter do
-  subject { Telemeter.instance }
+RSpec.describe Chef::Telemeter do
+  subject { Chef::Telemeter.instance }
   let(:host_platform) { "linux" }
   let(:enabled_flag) { false }
   let(:dev_mode) { false }
