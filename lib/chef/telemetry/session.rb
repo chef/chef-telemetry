@@ -1,7 +1,7 @@
 require "securerandom"
 require "chef-config/path_helper"
 
-module Chef
+class Chef
   class Telemetry
     class Session
       def initialize
