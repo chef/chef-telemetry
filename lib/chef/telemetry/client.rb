@@ -1,7 +1,7 @@
 require "http"
 require "concurrent"
 
-module Chef
+class Chef
   class Telemetry
     class Client
       include Concurrent::Async

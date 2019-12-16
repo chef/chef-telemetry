@@ -24,7 +24,7 @@ require "digest/sha1"
 require "securerandom"
 require "yaml"
 
-module Chef
+class Chef
   # This definites the Telemeter interface. Implementation thoughts for
   # when we unstub it:
   # - let's track the call sequence; most of our calls will be nested inside

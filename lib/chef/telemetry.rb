@@ -4,7 +4,7 @@ require "chef/telemetry/event"
 require "chef/telemetry/session"
 require "chef/telemetry/version"
 
-module Chef
+class Chef
   class Telemetry
     attr_accessor :product, :origin, :product_version, :install_context
     def initialize(product: nil, origin: "command-line",

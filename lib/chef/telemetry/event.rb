@@ -1,4 +1,4 @@
-module Chef
+class Chef
   class Telemetry
     class Event
 
