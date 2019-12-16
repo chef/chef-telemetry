@@ -1,20 +1,18 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.1 -->
+<!-- latest_release -->
+<!-- latest_release -->
+
+<!-- release_rollup -->
+<!-- release_rollup -->
+
+<!-- latest_stable_release -->
 ## [v1.0.1](https://github.com/chef/chef-telemetry/tree/v1.0.1) (2019-12-16)
 
 #### Merged Pull Requests
 - Use &#39;class&#39; instead of &#39;module&#39; for &quot;Chef&quot;. [#25](https://github.com/chef/chef-telemetry/pull/25) ([marcparadise](https://github.com/marcparadise))
-<!-- latest_release -->
-
-<!-- release_rollup since=1.0.0 -->
-### Changes not yet released to rubygems.org
-
-#### Merged Pull Requests
-- Use &#39;class&#39; instead of &#39;module&#39; for &quot;Chef&quot;. [#25](https://github.com/chef/chef-telemetry/pull/25) ([marcparadise](https://github.com/marcparadise)) <!-- 1.0.1 -->
-<!-- release_rollup -->
-
 <!-- latest_stable_release -->
+
 ## [v1.0.0](https://github.com/chef/chef-telemetry/tree/v1.0.0) (2019-12-03)
 
 #### Merged Pull Requests
@@ -24,7 +22,6 @@
 - Changes to my previous PR per post-merge review [#17](https://github.com/chef/chef-telemetry/pull/17) ([zenspider](https://github.com/zenspider))
 - Adding ruby 2.7 testing [#21](https://github.com/chef/chef-telemetry/pull/21) ([zenspider](https://github.com/zenspider))
 - Fixed path on version updater. [#22](https://github.com/chef/chef-telemetry/pull/22) ([zenspider](https://github.com/zenspider))
-<!-- latest_stable_release -->
 
 ## [v0.1.8](https://github.com/chef/chef-telemetry/tree/v0.1.8) (2019-01-16)
 
