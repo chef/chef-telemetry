@@ -51,7 +51,7 @@ class Chef
       # :dev_mode # false, not required
       config[:dev_mode] ||= false
       config[:enabled] ||= false
-      require "chef_core/telemeter/sender"
+      require "chef/telemeter/sender"
       @config = config
       Sender.start_upload_thread(config)
     end
@@ -62,6 +62,7 @@ class Chef
     end
 
     def initialize
+      @config = []
       @events_to_send = []
       @run_timestamp =  Time.now.utc.strftime("%FT%TZ")
     end
