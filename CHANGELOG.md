@@ -1,25 +1,22 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.2 -->
+<!-- latest_release -->
+<!-- latest_release -->
+
+<!-- release_rollup -->
+<!-- release_rollup -->
+
+<!-- latest_stable_release -->
 ## [v1.0.2](https://github.com/chef/chef-telemetry/tree/v1.0.2) (2019-12-18)
 
 #### Merged Pull Requests
 - Fixes incorrect require into chef-core [#26](https://github.com/chef/chef-telemetry/pull/26) ([marcparadise](https://github.com/marcparadise))
-<!-- latest_release -->
-
-<!-- release_rollup since=1.0.1 -->
-### Changes not yet released to rubygems.org
-
-#### Merged Pull Requests
-- Fixes incorrect require into chef-core [#26](https://github.com/chef/chef-telemetry/pull/26) ([marcparadise](https://github.com/marcparadise)) <!-- 1.0.2 -->
-<!-- release_rollup -->
-
 <!-- latest_stable_release -->
+
 ## [v1.0.1](https://github.com/chef/chef-telemetry/tree/v1.0.1) (2019-12-16)
 
 #### Merged Pull Requests
 - Use &#39;class&#39; instead of &#39;module&#39; for &quot;Chef&quot;. [#25](https://github.com/chef/chef-telemetry/pull/25) ([marcparadise](https://github.com/marcparadise))
-<!-- latest_stable_release -->
 
 ## [v1.0.0](https://github.com/chef/chef-telemetry/tree/v1.0.0) (2019-12-03)
 
