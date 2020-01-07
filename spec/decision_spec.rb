@@ -1,93 +1,45 @@
 require "spec_helper"
+require "chef/telemetry/decision"
 
 RSpec.describe Chef::Telemetry::Decision do
-  let(:env) { {} }
-  let(:env_pwd) { "/path/to/cwd" }
-  let(:home) { "/Users/chef_user" }
-
-  before do
-    stub_const("ENV", env)
-
-    if ChefConfig.windows?
-      env["CD"] = env_pwd
-    else
-      env["PWD"] = env_pwd
-    end
-
-    allow(ChefConfig::PathHelper).to receive(:home).with(".chef").and_return(File.join(home, ".chef"))
+  it "has a version number" do
+    expect(Chef::Telemetry::VERSION).not_to be nil
   end
 
-  describe "#local_opt_out" do
-    it "returns true if it finds an opt out file" do
-      expect(File).to receive(:exist?).with(File.join(env_pwd, ".chef/telemetry_opt_out")).and_return true
-      expect(subject.local_opt_out?).to be true
-    end
+  let(:output) do
+    d = StringIO.new
+    allow(d).to receive(:isatty).and_return(true)
+    d
   end
+  let(:opts) { { output: output } }
+  let(:dec) { Chef::Telemetry::Decision.new(opts) }
 
-  context "a user decision" do
-    describe "#user_opted_out?" do
-      it "returns true if an opt out file exists in the users home directory" do
-        expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_out").and_return true
-        expect(subject.user_opted_out?).to be true
-      end
-    end
+  describe "#check_and_persist" do
+    let(:env_dec) { instance_double(Chef::Telemetry::Decision::Environment) }
 
-    describe "#user_opted_in?" do
-      it "returns true if an opt in file exists in the users home directory" do
-        expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_in").and_return true
-        expect(subject.user_opted_in?).to be true
-      end
-    end
-  end
-
-  describe "#opt_out?" do
     before do
-      %w{ / /path/ /path/to/ /path/to/cwd/ }.each do |pth|
-        allow(File).to receive(:exist?).with("#{pth}.chef/telemetry_opt_out").and_return false
+      expect(Chef::Telemetry::Decision::Environment).to receive(:new).and_return(env_dec)
+    end
+
+    describe "when the user expresses intent as an environment variable" do
+      def check_option_behavior(opts = { should_opt_in: false } )
+        expect(dec.check_and_persist).to eq(opts[:should_opt_in])
+        expect(output.string).to eq("")
       end
-      allow(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_out").and_return false
-      allow(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_in").and_return false
-    end
 
-    it "is true if the user has opted out globally" do
-      expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_out").and_return true
-      expect(subject.opt_out?).to be true
-    end
+      describe "when intent is opt-in" do
+        before { allow(env_dec).to receive(:opt_in?).and_return(true) }
+        it "opts in silently" do
+          check_option_behavior(should_opt_in: true)
+        end
+      end
 
-    it "is true if the user has set an environment variable" do
-      env["CHEF_TELEMETRY_OPT_OUT"] = true
-      expect(subject.opt_out?).to be true
-    end
-
-    it "is true if the user has opted out locally" do
-      expect(File).to receive(:exist?).with("/path/to/cwd/.chef/telemetry_opt_out").and_return true
-      expect(subject.opt_out?).to be true
-    end
-
-    it "is false if the user has opted in" do
-      expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_in").and_return true
-      expect(subject.opt_out?).to be false
-    end
-
-    it "is true by default" do
-      expect(subject.opt_out?).to be true
-    end
-  end
-
-  describe "#made?" do
-    it "is true if the user has opted out globally" do
-      expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_in").and_return false
-      expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_out").and_return true
-      expect(subject.made?).to be true
-    end
-
-    it "is true if the user has opted in globally" do
-      expect(File).to receive(:exist?).with("/Users/chef_user/.chef/telemetry_opt_in").and_return true
-      expect(subject.made?).to be true
-    end
-
-    it "is false if the user has not made a decision" do
-      expect(subject.made?).to be false
+      describe "when intent is opt-out" do
+        before { allow(env_dec).to receive(:opt_in?).and_return(false) }
+        it "opts out silently" do
+          check_option_behavior(should_opt_in: false)
+        end
+      end
     end
   end
 end

@@ -1,13 +1,35 @@
 require "chef-config/path_helper"
 require "chef-config/windows"
 
+require_relative "decision/environment"
+
 # Decision allows us to inspect whether the user has made a decision to opt in or opt out of telemetry.
 class Chef
   class Telemetry
-    module Decision
+    class Decision
       OPT_OUT_FILE = "telemetry_opt_out".freeze
       OPT_IN_FILE = "telemetry_opt_in".freeze
 
+      def initialize(opts = {})
+        @config = opts
+        @env_decision = Decision::Environment.new(ENV)
+      end
+
+      #
+      # Methods for obtaining consent from the user.
+      #
+      def check_and_persist
+        enabled = @env_decision.opt_in?
+        enabled
+      end
+
+      def self.check_and_persist(opts = {})
+        new(opts)
+      end
+
+      #
+      # Predicates for determining status of opt-in.
+      #
       class << self
         def opt_out?
           # We check that the user has made a decision so that we can have a default setting for robots
