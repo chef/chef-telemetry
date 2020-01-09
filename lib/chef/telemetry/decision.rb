@@ -1,7 +1,8 @@
 require "chef-config/path_helper"
 require "chef-config/windows"
-
+require "logger"
 require_relative "decision/environment"
+require_relative "decision/file"
 
 # Decision allows us to inspect whether the user has made a decision to opt in or opt out of telemetry.
 class Chef
@@ -13,13 +14,15 @@ class Chef
       def initialize(opts = {})
         @config = opts
         @env_decision = Decision::Environment.new(ENV)
+        @file_decision = Decision::File.new(opts)
       end
 
       #
       # Methods for obtaining consent from the user.
       #
       def check_and_persist
-        enabled = @env_decision.opt_in?
+        enabled = (@env_decision.opt_in? && !@env_decision.opt_out?) ||
+                    @file_decision.opt_in?
         enabled
       end
 
@@ -51,37 +54,6 @@ class Chef
 
         def env_opt_out?
           ENV.key?("CHEF_TELEMETRY_OPT_OUT")
-        end
-
-        def local_opt_out?
-          found = false
-          full_path = working_directory.split(File::SEPARATOR)
-          (full_path.length - 1).downto(0) do |i|
-            candidate = File.join(full_path[0..i], ".chef", OPT_OUT_FILE)
-            if File.exist?(candidate)
-              # TODO: push up logging
-              # Log.info "Found opt out at: #{candidate}"
-              found = true
-              break
-            end
-          end
-          found
-        end
-
-        private
-
-        def working_directory
-          a = if ChefConfig.windows?
-                ENV["CD"]
-              else
-                ENV["PWD"]
-              end || Dir.pwd
-
-          a
-        end
-
-        def home
-          ChefConfig::PathHelper.home(".chef")
         end
       end
     end
