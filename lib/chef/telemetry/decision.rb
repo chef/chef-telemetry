@@ -1,6 +1,7 @@
 require "chef-config/path_helper"
 require "chef-config/windows"
 require "logger"
+require "forwardable"
 require_relative "decision/environment"
 require_relative "decision/file"
 
@@ -8,31 +9,66 @@ require_relative "decision/file"
 class Chef
   class Telemetry
     class Decision
-      OPT_OUT_FILE = "telemetry_opt_out".freeze
-      OPT_IN_FILE = "telemetry_opt_in".freeze
+      extend Forwardable
+
+      attr_reader :config, :enabled, :env_decision, :file_decision, :logger
 
       def initialize(opts = {})
         @config = opts
+
+        @logger = opts[:logger] || Logger.new(opts.key?(:output) ? opts[:output] : STDERR)
+        config[:logger] = logger
+
+        # This is the whole point - whether telemetry shoud be enabled in this
+        # runtime invocation. Start by assuming no.
+        @enabled = false
+
+        # The various things that have a say in whether telemetry should be enabled.
         @env_decision = Decision::Environment.new(ENV)
-        @file_decision = Decision::File.new(opts)
+        @file_decision = Decision::File.new(config)
       end
 
       #
       # Methods for obtaining consent from the user.
       #
-      def check_and_persist
-        enabled = (@env_decision.opt_in? && !@env_decision.opt_out?) ||
-                    @file_decision.opt_in?
-        enabled
+      def check_and_persist(dir) # TODO - What default, if any, for dir?
+        # If a non-persisting decision is made by env, only set runtime decision
+        logger.debug "Telemetry decision examining ephemeral ENV checks"
+        return @enabled = true if @env_decision.opt_in_no_persist?
+        return @enabled = false if @env_decision.opt_out_no_persist?
+
+        # Check to see if a persistent decision is made by env but not yet persisted
+        #  then persist it and set runtime decision
+        logger.debug "Telemetry decision examining persistent ENV checks"
+        if env_decision.opt_in?
+          file_decision.persist(true, dir) if !persisted? || file_decision.opt_out?
+          return @enabled = true
+        elsif env_decision.opt_out?
+          file_decision.persist(false, dir) if !persisted? || file_decision.opt_in?
+          return @enabled = false
+        end
+
+        # If a decision has been made by file, read from disk and set runtime decision
+        logger.debug "Telemetry decision examining file checks"
+        if persisted?
+          return @enabled = true if file_decision.opt_in?
+          return @enabled = false if file_decision.opt_out?
+        end
+
+        # Otherwise no decision has been made, default to runtime opt-out
+        logger.debug "Telemetry decision - no decision, defaulting to opt-out"
+        @enabled = false
       end
 
       def self.check_and_persist(opts = {})
-        new(opts)
+        new(opts).check_and_persist
       end
 
       #
       # Predicates for determining status of opt-in.
       #
+      def_delegator :file_decision, :persisted?
+
       class << self
         def opt_out?
           # We check that the user has made a decision so that we can have a default setting for robots
