@@ -15,8 +15,8 @@ class Chef
 
       def initialize(opts = {})
         @config = opts
-
         @logger = opts[:logger] || Logger.new(opts.key?(:output) ? opts[:output] : STDERR)
+        @config[:output] ||= STDOUT
         config[:logger] = logger
 
         # This is the whole point - whether telemetry shoud be enabled in this
@@ -32,6 +32,9 @@ class Chef
       # Methods for obtaining consent from the user.
       #
       def check_and_persist(dir) # TODO - What default, if any, for dir?
+
+        file_decision.local_dir = dir
+
         # If a non-persisting decision is made by env, only set runtime decision
         logger.debug "Telemetry decision examining ephemeral ENV checks"
         return @enabled = true if @env_decision.opt_in_no_persist?

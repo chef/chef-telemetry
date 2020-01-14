@@ -10,7 +10,7 @@ class Chef
 
       # Represents a telemetry opt-in or out recorded on disk.
       class File
-        DECISION_FILE = "telemetry_options".freeze
+        DECISION_FILE = "telemetry_options.yaml".freeze
 
         attr_reader :logger, :contents, :location
         attr_accessor :local_dir # Optional local path to use to seek
@@ -41,14 +41,15 @@ class Chef
         # @return Array of Errors
         def persist(decision, dir, content = {})
           content[:decision_time] = DateTime.now.to_s
-          content[:enable] = decision
+          content[:enabled] = decision
           @contents = content
 
           begin
             msg = "Could not create directory for telemetry optin/out decision #{dir}"
             FileUtils.mkdir_p(dir)
-            msg = "Could not write telemetry optin/out decision file #{dir}/#{decision}"
-            ::File.write("#{dir}/#{decision}", YAML.dump(content))
+            msg = "Could not write telemetry optin/out decision file #{dir}/#{DECISION_FILE}"
+            ::File.write("#{dir}/#{DECISION_FILE}", YAML.dump(content))
+            return []
           rescue StandardError => e
             logger.info "#{msg}\n\t#{e.message}"
             logger.debug "#{e.backtrace.join("\n\t")}"
@@ -91,7 +92,7 @@ class Chef
           return contents if contents
           path = seek
           return nil unless path
-          @contents ||= YAML.load(File.read(path))
+          @contents ||= YAML.load(::File.read(path))
         end
 
       end
