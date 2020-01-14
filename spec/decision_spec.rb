@@ -35,25 +35,24 @@ RSpec.describe Chef::Telemetry::Decision do
       expect(dec.persisted?).to be false unless test_params[:should_persist]
 
       expect(output.string).to include "https://www.chef.io/privacy-policy/" if test_params[:should_prompt]
-      expect(output.string).to be_empty  unless test_params[:should_prompt]
+      expect(output.string).to be_empty unless test_params[:should_prompt]
 
     end
   end
 
   describe "#check_and_persist" do
-    let(:env_dec) { instance_double(Chef::Telemetry::Decision::Environment) }
-
-    before do
-      expect(Chef::Telemetry::Decision::Environment).to receive(:new).and_return(env_dec)
-
-      # Default all mock decisions to false
-      allow(env_dec).to receive(:opt_out?).and_return(false)
-      allow(env_dec).to receive(:opt_out_no_persist?).and_return(false)
-      allow(env_dec).to receive(:opt_in?).and_return(false)
-      allow(env_dec).to receive(:opt_in_no_persist?).and_return(false)
-    end
-
     describe "when the user expresses intent as an environment variable" do
+      let(:env_dec) { instance_double(Chef::Telemetry::Decision::Environment) }
+      before do
+        expect(Chef::Telemetry::Decision::Environment).to receive(:new).and_return(env_dec)
+
+        # Default all mock decisions to false
+        allow(env_dec).to receive(:opt_out?).and_return(false)
+        allow(env_dec).to receive(:opt_out_no_persist?).and_return(false)
+        allow(env_dec).to receive(:opt_in?).and_return(false)
+        allow(env_dec).to receive(:opt_in_no_persist?).and_return(false)
+      end
+
       describe "when intent is opt-in without persistence" do
         before { allow(env_dec).to receive(:opt_in_no_persist?).and_return(true) }
         it "opts in silently without persistence" do
@@ -157,6 +156,39 @@ RSpec.describe Chef::Telemetry::Decision do
           check_option_behavior(
             should_be_enabled: false,
             should_prompt: true,
+            should_persist: false
+          )
+        end
+      end
+    end
+
+    describe "when the user expresses intent via a CLI arg" do
+      let(:arg_dec) { instance_double(Chef::Telemetry::Decision::Argument) }
+
+      before do
+        expect(Chef::Telemetry::Decision::Argument).to receive(:new).and_return(arg_dec)
+
+        # Default all mock decisions to false
+        allow(arg_dec).to receive(:enable?).and_return(false)
+        allow(arg_dec).to receive(:disable?).and_return(false)
+      end
+
+      describe "when the arg is to enable telemetry" do
+        before { allow(arg_dec).to receive(:enable?).and_return(true) }
+        it "enables telemetry silently and does not persist" do
+          check_option_behavior(
+            should_be_enabled: true,
+            should_prompt: false,
+            should_persist: false
+          )
+        end
+      end
+      describe "when the arg is to disable telemetry" do
+        before { allow(arg_dec).to receive(:disable?).and_return(true) }
+        it "disables telemetry silently and does not persist" do
+          check_option_behavior(
+            should_be_enabled: false,
+            should_prompt: false,
             should_persist: false
           )
         end

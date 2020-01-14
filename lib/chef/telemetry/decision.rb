@@ -2,6 +2,8 @@ require "chef-config/path_helper"
 require "chef-config/windows"
 require "logger"
 require "forwardable"
+
+require_relative "decision/argument"
 require_relative "decision/environment"
 require_relative "decision/file"
 require_relative "decision/prompt"
@@ -12,7 +14,7 @@ class Chef
     class Decision
       extend Forwardable
 
-      attr_reader :config, :enabled, :env_decision, :file_decision, :prompt_decision, :logger
+      attr_reader :config, :enabled, :arg_decision, :env_decision, :file_decision, :prompt_decision, :logger
 
       def initialize(opts = {})
         @config = opts
@@ -25,6 +27,7 @@ class Chef
         @enabled = false
 
         # The various things that have a say in whether telemetry should be enabled.
+        @arg_decision = Decision::Argument.new(ARGV)
         @env_decision = Decision::Environment.new(ENV)
         @file_decision = Decision::File.new(config)
         @prompt_decision = Decision::Prompt.new(config)
@@ -33,8 +36,13 @@ class Chef
       #
       # Methods for obtaining consent from the user.
       #
-      def check_and_persist(dir) # TODO - What default, if any, for dir?
+      def check_and_persist(dir = ".")
         file_decision.local_dir = dir
+
+        # If a decision is made by CLI arg, set runtime decision and do not persist
+        logger.debug "Telemetry decision examining CLI arg checks"
+        return @enabled = true if @arg_decision.enable?
+        return @enabled = false if @arg_decision.disable?
 
         # If a non-persisting decision is made by env, only set runtime decision
         logger.debug "Telemetry decision examining ephemeral ENV checks"
