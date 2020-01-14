@@ -4,6 +4,7 @@ require "logger"
 require "forwardable"
 require_relative "decision/environment"
 require_relative "decision/file"
+require_relative "decision/prompt"
 
 # Decision allows us to inspect whether the user has made a decision to opt in or opt out of telemetry.
 class Chef
@@ -11,7 +12,7 @@ class Chef
     class Decision
       extend Forwardable
 
-      attr_reader :config, :enabled, :env_decision, :file_decision, :logger
+      attr_reader :config, :enabled, :env_decision, :file_decision, :prompt_decision, :logger
 
       def initialize(opts = {})
         @config = opts
@@ -26,13 +27,13 @@ class Chef
         # The various things that have a say in whether telemetry should be enabled.
         @env_decision = Decision::Environment.new(ENV)
         @file_decision = Decision::File.new(config)
+        @prompt_decision = Decision::Prompt.new(config)
       end
 
       #
       # Methods for obtaining consent from the user.
       #
       def check_and_persist(dir) # TODO - What default, if any, for dir?
-
         file_decision.local_dir = dir
 
         # If a non-persisting decision is made by env, only set runtime decision
@@ -56,6 +57,12 @@ class Chef
         if persisted?
           return @enabled = true if file_decision.opt_in?
           return @enabled = false if file_decision.opt_out?
+        end
+
+        # Lowest priority is to interactively prompt if we have a TTY
+        if config[:output].isatty
+          logger.debug "Telemetry decision - detected TTY, prompting..."
+          return @enabled = prompt_decision.prompt(dir, file_decision)
         end
 
         # Otherwise no decision has been made, default to runtime opt-out

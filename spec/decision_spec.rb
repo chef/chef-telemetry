@@ -3,16 +3,25 @@ require "chef/telemetry/decision"
 require "tmpdir"
 require "logger"
 
+# This should probably be in the CI script, not here
+ENV["CI_TELEMETRY_PROMPT_TIMEOUT"] = "1"
+
 RSpec.describe Chef::Telemetry::Decision do
   it "has a version number" do
     expect(Chef::Telemetry::VERSION).not_to be nil
   end
 
   let(:logger) { l = Logger.new(STDERR); l.level = Logger::ERROR; l }
-  let(:opts) { { logger: logger } }
+  let(:output) do
+    buffer = StringIO.new
+    allow(buffer).to receive(:isatty).and_return(true)
+    buffer
+  end
+  let(:input) { STDIN }
+  let(:opts) { { logger: logger, output: output, input: input } }
   let(:dec) { Chef::Telemetry::Decision.new(opts) }
 
-  def check_option_behavior(test_params = { should_be_enabled: false, should_persist: false } )
+  def check_option_behavior(test_params = { should_be_enabled: false, should_persist: false, should_prompt: false } )
     Dir.mktmpdir do |dir|
 
       dec.file_decision.local_dir = dir
@@ -20,10 +29,14 @@ RSpec.describe Chef::Telemetry::Decision do
 
       # Branch here for nice(r) error messages
       expect(dec.enabled).to be true if test_params[:should_be_enabled]
-      expect(dec.enabled).to be false if !test_params[:should_be_enabled]
+      expect(dec.enabled).to be false unless test_params[:should_be_enabled]
 
       expect(dec.persisted?).to be true if test_params[:should_persist]
-      expect(dec.persisted?).to be false if !test_params[:should_persist]
+      expect(dec.persisted?).to be false unless test_params[:should_persist]
+
+      expect(output.string).to include "https://www.chef.io/privacy-policy/" if test_params[:should_prompt]
+      expect(output.string).to be_empty  unless test_params[:should_prompt]
+
     end
   end
 
@@ -78,7 +91,6 @@ RSpec.describe Chef::Telemetry::Decision do
     end
 
     describe "when the user expresses intent as a file" do
-
       describe "when intent is opt-in" do
         before do
           allow(dec).to receive(:persisted?).and_return(true)
@@ -105,7 +117,48 @@ RSpec.describe Chef::Telemetry::Decision do
           allow(dec.file_decision).to receive(:contents).and_return(nil)
         end
         it "opts out" do
-          check_option_behavior(should_be_enabled: false)
+          check_option_behavior(should_be_enabled: false, should_prompt: true)
+        end
+      end
+    end
+
+    describe "when the user expresses intent interactively" do
+      describe "when the user opts in" do
+        let(:input) { StringIO.new("y\n") }
+        before do
+          allow(dec).to receive(:persisted?).and_return(true)
+        end
+        it "links to the data policy and opts in and persists" do
+          check_option_behavior(
+            should_be_enabled: true,
+            should_prompt: true,
+            should_persist: true
+          )
+        end
+      end
+      describe "when the user opts out" do
+        let(:input) { StringIO.new("n\n") }
+        before do
+          allow(dec).to receive(:persisted?).and_return(true)
+        end
+        it "links to the data policy and opts out and persists" do
+          check_option_behavior(
+            should_be_enabled: false,
+            should_prompt: true,
+            should_persist: true
+          )
+        end
+      end
+      describe "when the user does not answer" do
+        before do
+          allow(dec).to receive(:persisted?).and_return(false)
+        end
+        it "links to the data policy and opts out and does not persist" do
+          check_option_behavior(
+            should_be_enabled: false,
+            should_prompt: true,
+            should_persist: false
+          )
         end
       end
     end
