@@ -2,6 +2,7 @@
 require "tty-prompt"
 require "pastel"
 require "timeout"
+require "chef-config/windows"
 
 class Chef
   class Telemetry
@@ -14,7 +15,7 @@ class Chef
         PASTEL = Pastel.new
         BORDER = "+---------------------------------------------+".freeze
         YES = PASTEL.green.bold("y")
-        CHECK = PASTEL.green("✔")
+        CHECK = PASTEL.green(ChefConfig.windows? ? "√" : "✔")
 
         def initialize(cfg)
           @logger = cfg[:logger]
@@ -47,19 +48,30 @@ class Chef
         def ask(dir, persistor)
           logger.debug("Attempting to request interactive prompt on TTY")
           prompt = TTY::Prompt.new(track_history: false, active_color: :bold, interrupt: :exit, output: output, input: input)
-
           answer = false
-
           timeout = ENV["CI_TELEMETRY_PROMPT_TIMEOUT"].nil? ? 60 : ENV["CI_TELEMETRY_PROMPT_TIMEOUT"].to_i
-          begin
-            Timeout.timeout(timeout, PromptTimeout) do
-              answer = prompt.yes?(">")
-            end
-          rescue PromptTimeout
+          handle_timeout = ->() {
             prompt.unsubscribe(prompt.reader)
             output.puts "\nPrompt timed out. Opting out of telemetry\nfor this run."
             # Do not opt-in on timeout
             return false
+          }
+
+          if ChefConfig.windows?
+            # On windows, Timeout hangs on STDIN. TTY::Prompt's keypress is safe, but we
+            # can't distinguish a "timeout default" from a "they just pressed enter default"
+            # So, assume all defaults are opt-out.
+            answer = prompt.keypress("y/n?", default: "t", timeout: timeout)
+            return handle_timeout.call if answer == "t"
+            answer = answer == "y"
+          else
+            begin
+              Timeout.timeout(timeout, PromptTimeout) do
+                answer = prompt.yes?(">")
+              end
+            rescue PromptTimeout
+              return handle_timeout.call
+            end
           end
 
           logger.debug "Saw answer #{answer}"
