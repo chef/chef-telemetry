@@ -28,9 +28,9 @@ RSpec.describe Chef::Telemetry do
     end
   end
 
-  describe "opted in" do
+  describe "enabled" do
     before do
-      expect(Chef::Telemetry::Decision).to receive(:opt_out?).and_return(false)
+      expect(Chef::Telemeter).to receive(:enabled?).and_return(true)
     end
 
     it "sends an event" do
@@ -39,9 +39,9 @@ RSpec.describe Chef::Telemetry do
     end
   end
 
-  describe "opted out" do
+  describe "disabled" do
     before do
-      expect(Chef::Telemetry::Decision).to receive(:opt_out?).and_return(true)
+      expect(Chef::Telemeter).to receive(:enabled?).and_return(false)
     end
 
     it "doesn't send an event" do

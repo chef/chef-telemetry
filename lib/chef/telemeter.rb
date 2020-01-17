@@ -49,8 +49,10 @@ class Chef
       # :installation_identifier_file # required
       # :enabled  # false, not required
       # :dev_mode # false, not required
+      # :logger
       config[:dev_mode] ||= false
       config[:enabled] ||= false
+      config[:logger] ||= Logger.new(STDERR)
       require_relative "telemeter/sender"
       @config = config
       Sender.start_upload_thread(config)
@@ -58,7 +60,7 @@ class Chef
 
     def enabled?
       require_relative "telemetry/decision"
-      config[:enabled] && !Telemetry::Decision.env_opt_out?
+      config[:enabled]
     end
 
     def initialize
@@ -114,7 +116,7 @@ class Chef
         begin
           File.read(config[:installation_identifier_file]).chomp
         rescue
-          Telemeter::Log.info "could not read #{config[:installation_identifier_file]} - using default id"
+          config[:logger].info "could not read installation id file '#{config[:installation_identifier_file]}' - using default id"
           DEFAULT_INSTALLATION_GUID
         end
     end

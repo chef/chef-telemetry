@@ -18,7 +18,7 @@ class Chef
     end
 
     def deliver(data = {})
-      unless opt_out?
+      if Chef::Telemeter.enabled?
         payload = event.prepare(data)
         client.await.fire(payload)
       end
@@ -31,10 +31,6 @@ class Chef
 
     def session
       @session ||= Session.new
-    end
-
-    def opt_out?
-      @opt_out ||= Decision.opt_out?
     end
 
     def client
