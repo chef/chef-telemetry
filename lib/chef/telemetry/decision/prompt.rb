@@ -14,8 +14,9 @@ class Chef
 
         PASTEL = Pastel.new
         BORDER = "+---------------------------------------------+".freeze
-        YES = PASTEL.green.bold("y")
         CHECK = PASTEL.green(ChefConfig.windows? ? "√" : "✔")
+        X_MARK = PASTEL.red(ChefConfig.windows? ? "x" : "×")
+        CIRCLE = PASTEL.green(ChefConfig.windows? ? "O" : "◯")
 
         def initialize(cfg)
           @logger = cfg[:logger]
@@ -26,18 +27,16 @@ class Chef
         def prompt(dir, persistor)
           logger.debug "Prompting for opt-in/out..."
 
-          optin_question = "Enable usage data collection (#{YES}/n)?"
-
           output.puts <<~EOM
             #{BORDER}
-                        Chef Telemetry Opt-In
-            Optionally, you may choose to participate in
-            the Chef Telemetry program, which helps improve
-            Chef products by collecting data. View the
-            Privacy Policy at:
-            https://www.chef.io/privacy-policy/
+            Share Data with Chef
+            Chef would like to collect anonymized usage and
+            diagnostic data to help improve your experience.
 
-            #{optin_question}
+            Privacy Policy: https://www.chef.io/privacy-policy/
+
+            Allow Chef to collect anonymized usage and
+            diagnostic data (yes/no)?
           EOM
 
           ask(dir, persistor)
@@ -52,7 +51,7 @@ class Chef
           timeout = ENV["CI_TELEMETRY_PROMPT_TIMEOUT"].nil? ? 60 : ENV["CI_TELEMETRY_PROMPT_TIMEOUT"].to_i
           handle_timeout = ->() {
             prompt.unsubscribe(prompt.reader)
-            output.puts "\nPrompt timed out. Opting out of telemetry\nfor this run."
+            output.puts "\nPrompt timed out. Opting out of usage data\nfor this run."
             # Do not opt-in on timeout
             return false
           }
@@ -77,18 +76,18 @@ class Chef
           logger.debug "Saw answer #{answer}"
 
           output.puts
-          inout = answer ? "opt-in" : "opt-out"
-          enabled = answer ? "Enabled" : "Disabled"
-          output.puts "Persisting telemetry #{inout} decision..."
+          output.puts "Saving data sharing setting..."
 
           errs = persistor.persist(answer, dir)
 
-          if errs.empty?
-            output.puts "#{CHECK} #{enabled} telemetry\n\n"
+          mark = answer ? CHECK : CIRCLE
+
+          if false # errs.empty?
+            output.puts "#{mark} Data sharing setting saved\n\n"
           else
             output.puts <<~EOM
-              #{CHECK} #{enabled} telemetry
-              Could not persist decision:\n\t* #{errs.map(&:message).join("\n\t* ")}
+              #{mark} Data sharing setting saved
+              #{X_MARK} Could not save decision:\n\t* #{errs.map(&:message).join("\n\t* ")}
             EOM
           end
           answer
