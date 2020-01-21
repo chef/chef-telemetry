@@ -49,6 +49,7 @@ class Chef
       # :installation_identifier_file # required
       # :enabled  # false, not required
       # :dev_mode # false, not required
+      # :product # product identifiers for the tables
       # :logger
       config[:dev_mode] ||= false
       config[:enabled] ||= false
