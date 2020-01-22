@@ -62,23 +62,38 @@ class Chef
           !!seek
         end
 
+        def self.default_file_location
+          ChefConfig::PathHelper.home(".chef")
+        end
+
         private
 
-        # Look for a decsion file in several locations.
+        # Look for an *existing* decsion file in several locations.
         def seek
           return location if location
 
+          on_windows = ChefConfig.windows?
           candidates = []
 
           # Include the user home directory ~/.chef
-          candidates << ChefConfig::PathHelper.home(".chef/#{DECISION_FILE}")
+          candidates << "#{self.class.default_file_location}/#{DECISION_FILE}"
+          candidates << "/etc/chef/#{DECISION_FILE}" unless on_windows
 
-          # TODO: include software installation directory, eg /opt/chef
+          # Include software installation dirs for bespoke downloads.
+          # TODO: unlikely these would be writable if decision changes.
+          [
+            # TODO - get a complete list
+            "chef-workstation",
+            "inspec",
+          ].each do |inst_dir|
+            if on_windows
+              candidates << "C:/opscode/#{inst_dir}/#{DECISION_FILE}"
+            else
+              candidates << "/opt/#{inst_dir}/#{DECISION_FILE}"
+            end
+          end
 
-          # Include /etc/chef if on unix-like
-          candidates << "/etc/chef/#{DECISION_FILE}" unless ChefConfig.windows?
-
-          # Include local directory if provided
+          # Include local directory if provided. Not usual, but useful for testing.
           candidates << "#{local_dir}/#{DECISION_FILE}" if local_dir
 
           @location = candidates.detect { |c| ::File.exist?(c) }

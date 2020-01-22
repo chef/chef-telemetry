@@ -36,7 +36,7 @@ class Chef
       #
       # Methods for obtaining consent from the user.
       #
-      def check_and_persist(dir = ".")
+      def check_and_persist(dir = Decision::File.default_file_location)
         file_decision.local_dir = dir
 
         # If a decision is made by CLI arg, set runtime decision and do not persist
@@ -78,8 +78,8 @@ class Chef
         @enabled = false
       end
 
-      def self.check_and_persist(opts = {})
-        new(opts).check_and_persist
+      def self.check_and_persist(dir = Decision::File.default_file_location, opts = {})
+        new(opts).check_and_persist(dir)
       end
 
       #

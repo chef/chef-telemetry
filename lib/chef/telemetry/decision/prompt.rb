@@ -82,7 +82,7 @@ class Chef
 
           mark = answer ? CHECK : CIRCLE
 
-          if false # errs.empty?
+          if errs.empty?
             output.puts "#{mark} Data sharing setting saved\n\n"
           else
             output.puts <<~EOM
