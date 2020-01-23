@@ -8,14 +8,18 @@ class Chef
 
       TELEMETRY_ENDPOINT = "https://telemetry.chef.io".freeze
 
-      attr_reader :http
-      def initialize(endpoint = TELEMETRY_ENDPOINT)
+      attr_reader :http, :logger
+
+      def initialize(logr = nil, endpoint = TELEMETRY_ENDPOINT)
         super()
         @http = HTTP.persistent(endpoint)
+        @logger = logr || Logger.new(STDERR)
       end
 
       def fire(event)
-        http.post("/events", json: event).flush
+        response = http.post("/events", json: event)
+        logger.debug("Have HTTP code #{response.code} for telemetry entry")
+        response.flush
       end
     end
 

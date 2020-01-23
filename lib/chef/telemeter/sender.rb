@@ -26,7 +26,7 @@ class Chef
     Log = logger # rubocop:disable Naming/ConstantName
 
     class Sender
-      attr_reader :session_files, :config
+      attr_reader :session_files, :config, :logger
 
       def self.start_upload_thread(config)
         # Find the files before we spawn the thread - otherwise
@@ -38,21 +38,22 @@ class Chef
       end
 
       def self.find_session_files(config)
-        Telemeter::Log.info("Looking for telemetry data to submit")
+        config[:logger].info("Looking for telemetry data to submit")
         session_search = File.join(config[:payload_dir], "telemetry-payload-*.yml")
         session_files = Dir.glob(session_search)
-        Telemeter::Log.info("Found #{session_files.length} sessions to submit")
+        config[:logger].info("Found #{session_files.length} sessions to submit")
         session_files
       end
 
       def initialize(session_files, config)
         @session_files = session_files
         @config = config
+        @logger = config[:logger]
       end
 
       def run
         if Telemeter.enabled?
-          Telemeter::Log.info("Telemetry enabled, beginning upload of previous session(s)")
+          logger.info("Telemetry enabled, beginning upload of previous session(s)")
           # dev mode telemetry gets sent to a different location
 
           if config[:dev_mode]
@@ -63,17 +64,17 @@ class Chef
           # If telemetry is not enabled, just clean up and return. Even though
           # the telemetry gem will not send if disabled, log output saying that we're submitting
           # it when it has been disabled can be alarming.
-          Telemeter::Log.info("Telemetry disabled, clearing any existing session captures without sending them.")
+          logger.info("Telemetry disabled, clearing any existing session captures without sending them.")
           session_files.each { |path| FileUtils.rm_rf(path) }
         end
         FileUtils.rm_rf(config[:session_file])
-        Telemeter::Log.info("Terminating, nothing more to do.")
+        logger.info("Terminating, nothing more to do.")
       rescue => e
-        Telemeter::Log.fatal "Sender thread aborted: '#{e}' failed at  #{e.backtrace[0]}"
+        logger.fatal "Sender thread aborted: '#{e}' failed at  #{e.backtrace[0]}"
       end
 
       def process_session(path)
-        Telemeter::Log.info("Processing telemetry entries from #{path}")
+        logger.info("Processing telemetry entries from #{path}")
         content = load_and_clear_session(path)
         submit_session(content)
       end
@@ -87,7 +88,9 @@ class Chef
         entries = content["entries"]
         total = entries.length
         product_info = config[:product] || {}
-        telemetry = Telemetry.new(product: product_info[:name] || "chef-workstation",
+        telemetry = Telemetry.new(
+                                  logger: logger,
+                                  product: product_info[:name] || "chef-workstation",
                                   origin: product_info[:origin] || "command-line",
                                   product_version: product_info[:version] || content["version"],
                                   install_context: product_info[:install_context] || "omnibus")
@@ -98,13 +101,13 @@ class Chef
       end
 
       def submit_entry(telemetry, entry, sequence, total)
-        Telemeter::Log.info("Submitting telemetry entry #{sequence}/#{total}: #{entry} ")
+        logger.info("Submitting telemetry entry #{sequence}/#{total}: #{entry} ")
         telemetry.deliver(entry)
-        Telemeter::Log.info("Entry #{sequence}/#{total} submitted.")
+        logger.info("Entry #{sequence}/#{total} submitted.")
       rescue => e
         # No error handling in telemetry lib, so at least track the failrue
-        Telemeter::Log.error("Failed to send entry #{sequence}/#{total}: #{e}")
-        Telemeter::Log.error("Backtrace: #{e.backtrace} ")
+        logger.error("Failed to send entry #{sequence}/#{total}: #{e}")
+        logger.error("Backtrace: #{e.backtrace} ")
       end
 
       private
