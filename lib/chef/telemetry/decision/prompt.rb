@@ -14,6 +14,7 @@ class Chef
 
         PASTEL = Pastel.new
         BORDER = "+---------------------------------------------+".freeze
+        YES = PASTEL.green.bold("yes")
         CHECK = PASTEL.green(ChefConfig.windows? ? "√" : "✔")
         X_MARK = PASTEL.red(ChefConfig.windows? ? "x" : "×")
         CIRCLE = PASTEL.green(ChefConfig.windows? ? "O" : "◯")
@@ -28,18 +29,20 @@ class Chef
           logger.debug "Prompting for opt-in/out..."
 
           output.puts <<~EOM
-            #{BORDER}
-            Share Data with Chef
+                        Share Data with Chef
+
             Chef would like to collect anonymized usage and
             diagnostic data to help improve your experience.
 
             Privacy Policy: https://www.chef.io/privacy-policy/
 
             Allow Chef to collect anonymized usage and
-            diagnostic data (yes/no)?
+            diagnostic data (#{YES}/no)?
           EOM
 
-          ask(dir, persistor)
+          result = ask(dir, persistor)
+          puts "#{BORDER}"
+          result
         end
 
         private
