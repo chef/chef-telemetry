@@ -38,10 +38,10 @@ class Chef
       end
 
       def self.find_session_files(config)
-        config[:logger].info("Looking for telemetry data to submit")
+        config[:logger].debug("Looking for telemetry data to submit")
         session_search = File.join(config[:payload_dir], "telemetry-payload-*.yml")
         session_files = Dir.glob(session_search)
-        config[:logger].info("Found #{session_files.length} sessions to submit")
+        config[:logger].debug("Found #{session_files.length} sessions to submit")
         session_files
       end
 
@@ -53,7 +53,7 @@ class Chef
 
       def run
         if Telemeter.enabled?
-          logger.info("Telemetry enabled, beginning upload of previous session(s)")
+          logger.debug("Telemetry enabled, beginning upload of previous session(s)")
           # dev mode telemetry gets sent to a different location
 
           if config[:dev_mode]
@@ -64,17 +64,20 @@ class Chef
           # If telemetry is not enabled, just clean up and return. Even though
           # the telemetry gem will not send if disabled, log output saying that we're submitting
           # it when it has been disabled can be alarming.
-          logger.info("Telemetry disabled, clearing any existing session captures without sending them.")
-          session_files.each { |path| FileUtils.rm_rf(path) }
+          logger.debug("Telemetry disabled, clearing any existing session captures without sending them.")
+          session_files.each do |path|
+            logger.debug "telemetry: deleting #{path}"
+            FileUtils.rm_rf(path)
+          end
         end
         FileUtils.rm_rf(config[:session_file])
-        logger.info("Terminating, nothing more to do.")
+        logger.debug("Terminating, nothing more to do.")
       rescue => e
         logger.fatal "Sender thread aborted: '#{e}' failed at  #{e.backtrace[0]}"
       end
 
       def process_session(path)
-        logger.info("Processing telemetry entries from #{path}")
+        logger.debug("Processing telemetry entries from #{path}")
         content = load_and_clear_session(path)
         submit_session(content)
       end
@@ -101,9 +104,9 @@ class Chef
       end
 
       def submit_entry(telemetry, entry, sequence, total)
-        logger.info("Submitting telemetry entry #{sequence}/#{total}: #{entry} ")
+        logger.debug("Submitting telemetry entry #{sequence}/#{total}: #{entry} ")
         telemetry.deliver(entry)
-        logger.info("Entry #{sequence}/#{total} submitted.")
+        logger.debug("Entry #{sequence}/#{total} submitted.")
       rescue => e
         # No error handling in telemetry lib, so at least track the failrue
         logger.error("Failed to send entry #{sequence}/#{total}: #{e}")

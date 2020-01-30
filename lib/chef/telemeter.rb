@@ -126,7 +126,7 @@ class Chef
         begin
           File.read(config[:installation_identifier_file]).chomp
         rescue
-          config[:logger].info "could not read installation id file '#{config[:installation_identifier_file]}' - using default id"
+          config[:logger].debug "could not read installation id file '#{config[:installation_identifier_file]}' - using default id"
           DEFAULT_INSTALLATION_GUID
         end
     end
