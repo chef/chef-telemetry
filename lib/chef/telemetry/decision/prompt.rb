@@ -63,7 +63,7 @@ class Chef
             # On windows, Timeout hangs on STDIN. TTY::Prompt's keypress is safe, but we
             # can't distinguish a "timeout default" from a "they just pressed enter default"
             # So, assume all defaults are opt-out.
-            answer = prompt.keypress("y/n?", default: "t", timeout: timeout)
+            answer = prompt.keypress(">", default: "t", timeout: timeout)
             return handle_timeout.call if answer == "t"
             answer = answer == "y"
           else
@@ -78,18 +78,16 @@ class Chef
 
           logger.debug "Saw answer #{answer}"
 
+          onoff = answer ? "on" : "off"
+
           output.puts
-          output.puts "Saving data sharing setting..."
+          output.puts "Turning #{onoff} data sharing..."
 
           errs = persistor.persist(answer, dir)
+          output.puts "#{CHECK} Data sharing turned #{onoff}."
 
-          mark = answer ? CHECK : CIRCLE
-
-          if errs.empty?
-            output.puts "#{mark} Data sharing setting saved\n\n"
-          else
+          unless errs.empty?
             output.puts <<~EOM
-              #{mark} Data sharing setting saved
               #{X_MARK} Could not save decision:\n\t* #{errs.map(&:message).join("\n\t* ")}
             EOM
           end
