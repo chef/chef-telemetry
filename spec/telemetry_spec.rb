@@ -7,6 +7,11 @@ RSpec.describe Chef::Telemetry do
     }
   end
   let(:env) { {} }
+  let(:logger) {
+    l = Logger.new(STDERR)
+    l.level = Logger::WARN
+    l
+  }
 
   describe "#client" do
     let(:endpoint) { "https:://my.telemetry.endpoint" }
@@ -16,13 +21,13 @@ RSpec.describe Chef::Telemetry do
 
     describe "creates a new client" do
       it "with the default endpoint" do
-        expect(Chef::Telemetry::Client).to receive(:new).with(Chef::Telemetry::Client::TELEMETRY_ENDPOINT)
+        expect(Chef::Telemetry::Client).to receive(:new).with(subject.logger, Chef::Telemetry::Client::TELEMETRY_ENDPOINT)
         subject.client
       end
 
       it "using an environment key" do
         env["CHEF_TELEMETRY_ENDPOINT"] = endpoint
-        expect(Chef::Telemetry::Client).to receive(:new).with(endpoint)
+        expect(Chef::Telemetry::Client).to receive(:new).with(subject.logger, endpoint)
         subject.client
       end
     end
@@ -31,6 +36,7 @@ RSpec.describe Chef::Telemetry do
   describe "enabled" do
     before do
       expect(Chef::Telemeter).to receive(:enabled?).and_return(true)
+      subject.logger.level = Logger::WARN
     end
 
     it "sends an event" do
