@@ -1,8 +1,8 @@
-require "chef/telemetry/client"
-require "chef/telemetry/decision"
-require "chef/telemetry/event"
-require "chef/telemetry/session"
-require "chef/telemetry/version"
+require_relative "telemetry/client"
+require_relative "telemetry/decision"
+require_relative "telemetry/event"
+require_relative "telemetry/session"
+require_relative "telemetry/version"
 
 class Chef
   class Telemetry

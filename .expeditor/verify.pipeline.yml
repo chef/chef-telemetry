@@ -40,7 +40,7 @@ steps:
   expeditor:
     executor:
       docker:
-        image: ruby:2.7-rc
+        image: ruby:2.7-buster
 
 - label: run-specs-windows
   command:
