@@ -1,25 +1,22 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.3 -->
+<!-- latest_release -->
+<!-- latest_release -->
+
+<!-- release_rollup -->
+<!-- release_rollup -->
+
+<!-- latest_stable_release -->
 ## [v1.0.3](https://github.com/chef/chef-telemetry/tree/v1.0.3) (2020-02-13)
 
 #### Merged Pull Requests
 - Use require_relative to speed up requires [#28](https://github.com/chef/chef-telemetry/pull/28) ([tas50](https://github.com/tas50))
-<!-- latest_release -->
-
-<!-- release_rollup since=1.0.2 -->
-### Changes not yet released to rubygems.org
-
-#### Merged Pull Requests
-- Use require_relative to speed up requires [#28](https://github.com/chef/chef-telemetry/pull/28) ([tas50](https://github.com/tas50)) <!-- 1.0.3 -->
-<!-- release_rollup -->
-
 <!-- latest_stable_release -->
+
 ## [v1.0.2](https://github.com/chef/chef-telemetry/tree/v1.0.2) (2019-12-18)
 
 #### Merged Pull Requests
 - Fixes incorrect require into chef-core [#26](https://github.com/chef/chef-telemetry/pull/26) ([marcparadise](https://github.com/marcparadise))
-<!-- latest_stable_release -->
 
 ## [v1.0.1](https://github.com/chef/chef-telemetry/tree/v1.0.1) (2019-12-16)
 
