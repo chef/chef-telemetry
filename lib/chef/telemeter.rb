@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-require "chef/telemetry/version"
+require_relative "telemetry/version"
 require "benchmark"
 require "forwardable"
 require "singleton"
@@ -51,13 +51,13 @@ class Chef
       # :dev_mode # false, not required
       config[:dev_mode] ||= false
       config[:enabled] ||= false
-      require "chef/telemeter/sender"
+      require_relative "telemeter/sender"
       @config = config
       Sender.start_upload_thread(config)
     end
 
     def enabled?
-      require "chef/telemetry/decision"
+      require_relative "telemetry/decision"
       config[:enabled] && !Telemetry::Decision.env_opt_out?
     end
 

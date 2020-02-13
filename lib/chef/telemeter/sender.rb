@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 
-require "chef/telemetry"
-require "chef/telemeter"
+require_relative "../telemetry"
+require_relative "../telemeter"
 require "logger"
 
 class Chef
