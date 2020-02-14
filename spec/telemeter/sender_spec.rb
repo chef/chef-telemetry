@@ -23,11 +23,11 @@ RSpec.describe Chef::Telemeter::Sender do
   let(:session_files) { %w{file1 file2} }
   let(:enabled_flag) { true }
   let(:dev_mode) { false }
-  let(:logger) {
+  let(:logger) do
     l = Logger.new(STDERR)
     l.level = Logger::WARN
     l
-  }
+  end
   let(:config) do
     {
       payload_dir: "/tmp/telemeter-test/payloads",
@@ -38,7 +38,6 @@ RSpec.describe Chef::Telemeter::Sender do
     }
   end
   let(:subject) { Chef::Telemeter::Sender.new(session_files, config) }
-
 
   before do
     allow(subject).to receive(:config).and_return(config)

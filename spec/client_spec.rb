@@ -9,11 +9,11 @@ end
 RSpec.describe Chef::Telemetry::Client do
 
   let(:telemetry_endpoint) { "https://my.telemetry.endpoint" }
-  let(:logger) {
+  let(:logger) do
     l = Logger.new(STDERR)
     l.level = Logger::WARN
     l
-  }
+  end
   let(:event) { {} }
   let(:http_mock) { double(HTTP, flush: true) }
 

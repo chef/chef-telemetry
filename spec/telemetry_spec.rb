@@ -7,11 +7,11 @@ RSpec.describe Chef::Telemetry do
     }
   end
   let(:env) { {} }
-  let(:logger) {
+  let(:logger) do
     l = Logger.new(STDERR)
     l.level = Logger::WARN
     l
-  }
+  end
 
   describe "#client" do
     let(:endpoint) { "https:://my.telemetry.endpoint" }

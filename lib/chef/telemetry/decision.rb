@@ -23,12 +23,14 @@ class Chef
         config[:logger] = logger
 
         # This is the whole point - whether telemetry shoud be enabled in this
-        # runtime invocation. Start by assuming no.
-        @enabled = false
+        # runtime invocation. Start by assuming yes.
+        @enabled = true
 
         # The various things that have a say in whether telemetry should be enabled.
         @arg_decision = Decision::Argument.new(ARGV)
         @env_decision = Decision::Environment.new(ENV)
+
+        # These two are not yet used.
         @file_decision = Decision::File.new(config)
         @prompt_decision = Decision::Prompt.new(config)
       end
@@ -41,14 +43,18 @@ class Chef
 
         # If a decision is made by CLI arg, set runtime decision and do not persist
         logger.debug "Telemetry decision examining CLI arg checks"
-        return @enabled = true if @arg_decision.enable?
         return @enabled = false if @arg_decision.disable?
+        return @enabled = true if @arg_decision.enable?
 
         # If a non-persisting decision is made by env, only set runtime decision
         logger.debug "Telemetry decision examining ephemeral ENV checks"
-        return @enabled = true if @env_decision.opt_in_no_persist?
-        return @enabled = false if @env_decision.opt_out_no_persist?
+        return @enabled = false if @env_decision.disable?
+        return @enabled = true if @env_decision.enable?
 
+        # Stop here - code below this point is reserved for future opt-in / out work.
+        return @enabled if true
+
+        # rubocop: disable Lint/UnreachableCode
         # Check to see if a persistent decision is made by env but not yet persisted
         #  then persist it and set runtime decision
         logger.debug "Telemetry decision examining persistent ENV checks"
@@ -76,6 +82,7 @@ class Chef
         # Otherwise no decision has been made, default to runtime opt-out
         logger.debug "Telemetry decision - no decision, defaulting to opt-out"
         @enabled = false
+        # rubocop: enable Lint/UnreachableCode
       end
 
       def self.check_and_persist(dir = Decision::File.default_file_location, opts = {})
