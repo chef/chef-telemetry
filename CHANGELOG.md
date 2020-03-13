@@ -1,9 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release -->
+<!-- latest_release 1.0.4 -->
+## [v1.0.4](https://github.com/chef/chef-telemetry/tree/v1.0.4) (2020-03-13)
+
+#### Merged Pull Requests
+- Upgrade http dependency [#30](https://github.com/chef/chef-telemetry/pull/30) ([duncaan](https://github.com/duncaan))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=1.0.3 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Upgrade http dependency [#30](https://github.com/chef/chef-telemetry/pull/30) ([duncaan](https://github.com/duncaan)) <!-- 1.0.4 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
