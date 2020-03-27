@@ -18,5 +18,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "http", "~> 4"
   spec.add_dependency "ffi-yajl", "~> 2.2"
   spec.add_dependency "concurrent-ruby", "~> 1.0"
+  spec.add_dependency "pastel", "~> 0.7"
+  spec.add_dependency "tty-prompt", "~> 0.18"
   spec.add_dependency "chef-config"
 end

@@ -17,12 +17,14 @@
 
 require "spec_helper"
 require "chef/telemeter"
+require "logger"
 
 RSpec.describe Chef::Telemeter do
   subject { Chef::Telemeter.instance }
   let(:host_platform) { "linux" }
   let(:enabled_flag) { false }
   let(:dev_mode) { false }
+  let(:logger) { l = Logger.new(STDERR); l.level = Logger::WARN; l }
   let(:config) do
     {
       payload_dir: "/tmp/telemeter-test/paylaods",
@@ -30,6 +32,7 @@ RSpec.describe Chef::Telemeter do
       installation_identifier_file: "/etc/chef/chef_guid",
       enabled: enabled_flag,
       dev_mode: dev_mode,
+      logger: logger,
     }
   end
 
@@ -72,21 +75,10 @@ RSpec.describe Chef::Telemeter do
   end
 
   context "::enabled?" do
-    let(:enabled_flag) { false }
-
     context "when config value is enabled" do
       let(:enabled_flag) { true }
-      context "and CHEF_TELEMETRY_OPT_OUT is not present in env vars" do
-        it "returns false" do
-          ENV.delete("CHEF_TELEMETRY_OPT_OUT")
-          expect(subject.enabled?).to eq true
-        end
-      end
-      context "and CHEF_TELEMETRY_OPT_OUT is present in env vars" do
-        it "returns false" do
-          ENV["CHEF_TELEMETRY_OPT_OUT"] = ""
-          expect(subject.enabled?).to eq false
-        end
+      it "returns true" do
+        expect(subject.enabled?).to eq true
       end
     end
 

@@ -17,17 +17,24 @@
 
 require "spec_helper"
 require "chef/telemeter/sender"
+require "logger"
 
 RSpec.describe Chef::Telemeter::Sender do
   let(:session_files) { %w{file1 file2} }
   let(:enabled_flag) { true }
   let(:dev_mode) { false }
+  let(:logger) do
+    l = Logger.new(STDERR)
+    l.level = Logger::WARN
+    l
+  end
   let(:config) do
     {
       payload_dir: "/tmp/telemeter-test/payloads",
       session_file: "/tmp/telemeter-test/TELEMETRY_SESSION_ID",
       installation_identifier_file: "/etc/chef/chef_guid",
       dev_mode: dev_mode,
+      logger: logger
     }
   end
   let(:subject) { Chef::Telemeter::Sender.new(session_files, config) }
@@ -99,7 +106,7 @@ RSpec.describe Chef::Telemeter::Sender do
     context "when an error occurrs" do
       it "logs it" do
         allow(Chef::Telemeter).to receive(:enabled?).and_raise("Failed")
-        expect(Chef::Telemeter::Log).to receive(:fatal)
+        expect(logger).to receive(:fatal)
         subject.run
       end
     end

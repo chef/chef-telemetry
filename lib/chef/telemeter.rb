@@ -37,10 +37,10 @@ class Chef
       extend Forwardable
       def_delegators :instance, :setup, :timed_capture, :capture, :commit, :timed_run_capture
       def_delegators :instance, :pending_event_count, :last_event, :enabled?
-      def_delegators :instance, :make_event_payload, :config
+      def_delegators :instance, :make_event_payload, :config, :sender_thread
     end
 
-    attr_reader :events_to_send, :run_timestamp, :config
+    attr_reader :events_to_send, :run_timestamp, :config, :sender_thread, :logger
 
     def setup(config)
       # TODO validate required & correct keys
@@ -49,16 +49,28 @@ class Chef
       # :installation_identifier_file # required
       # :enabled  # false, not required
       # :dev_mode # false, not required
+      # :product # product identifiers for the tables
+      # :logger
       config[:dev_mode] ||= false
       config[:enabled] ||= false
+      config[:logger] ||= Logger.new(STDERR)
       require_relative "telemeter/sender"
       @config = config
-      Sender.start_upload_thread(config)
+      @logger = config[:logger]
+      @sender_thread = Sender.start_upload_thread(config)
+    end
+
+    at_exit do
+      t = Telemeter.sender_thread
+      if t && !t.stop?
+        Telemeter.logger.debug "Telemetry sender thread still running at process exit, waiting to finish..."
+        t.join
+      end
     end
 
     def enabled?
       require_relative "telemetry/decision"
-      config[:enabled] && !Telemetry::Decision.env_opt_out?
+      config[:enabled]
     end
 
     def initialize
@@ -114,7 +126,7 @@ class Chef
         begin
           File.read(config[:installation_identifier_file]).chomp
         rescue
-          Telemeter::Log.info "could not read #{config[:installation_identifier_file]} - using default id"
+          config[:logger].debug "could not read installation id file '#{config[:installation_identifier_file]}' - using default id"
           DEFAULT_INSTALLATION_GUID
         end
     end
