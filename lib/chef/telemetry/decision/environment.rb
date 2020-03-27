@@ -19,12 +19,12 @@ class Chef
           env_seek("opt-out")
         end
 
-        def opt_in_no_persist?
-          env_seek("opt-in-no-persist")
+        def enable?
+          env_seek("enable")
         end
 
-        def opt_out_no_persist?
-          env_seek("opt-out-no-persist")
+        def disable?
+          env_seek("disable")
         end
 
         private
