@@ -11,7 +11,7 @@ class Chef
       attr_reader :http
       def initialize(endpoint = TELEMETRY_ENDPOINT)
         super()
-        @http = HTTP.persistent(endpoint)
+        @http = ::HTTP.persistent(endpoint)
       end
 
       def fire(event)
