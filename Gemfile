@@ -20,9 +20,3 @@ group :docs do
   gem "redcarpet"
   gem "yard"
 end
-
-instance_eval(ENV["GEMFILE_MOD"]) if ENV["GEMFILE_MOD"]
-
-# If you want to load debugging tools into the bundle exec sandbox,
-# add these additional dependencies into Gemfile.local
-eval_gemfile("Gemfile.local") if File.exist?("Gemfile.local")
