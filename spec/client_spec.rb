@@ -10,15 +10,17 @@ RSpec.describe Chef::Telemetry::Client do
 
   let(:telemetry_endpoint) { "https://my.telemetry.endpoint" }
   let(:event) { {} }
-  let(:http_mock) { double(HTTP, flush: true) }
 
   it "initializes the http client" do
-    expect(HTTP).to receive(:persistent).with(telemetry_endpoint)
+    net_http_mock = double(Net::HTTP)
+    expect(Net::HTTP).to receive(:new).with(telemetry_endpoint).and_return(net_http_mock)
+    expect(net_http_mock).to receive(:start)
     Chef::Telemetry::Client.new(telemetry_endpoint)
   end
 
   it "sends an event" do
-    expect(subject.http).to receive(:post).with("/events", hash_including(json: event)).and_return(http_mock)
+    response_mock = double(Net::HTTPResponse, status: 200)
+    expect(subject.http).to receive(:request).with(instance_of(Net::HTTP::Post)).and_return(response_mock)
     subject.fire(event)
   end
 end
