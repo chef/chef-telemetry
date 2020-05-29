@@ -13,8 +13,10 @@ RSpec.describe Chef::Telemetry::Client do
 
   it "initializes the http client" do
     net_http_mock = double(Net::HTTP)
-    expect(Net::HTTP).to receive(:new).with(telemetry_endpoint).and_return(net_http_mock)
-    expect(net_http_mock).to receive(:start)
+    uri = URI(telemetry_endpoint)
+    expect(Net::HTTP).to receive(:new).with(uri.host, uri.port).and_return(net_http_mock)
+    expect(net_http_mock).to receive(:use_ssl=).with(true)
+    expect(net_http_mock).to receive(:start).with(any_args)
     Chef::Telemetry::Client.new(telemetry_endpoint)
   end
 

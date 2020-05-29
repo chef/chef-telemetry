@@ -1,4 +1,5 @@
 require "net/http"
+require "uri"
 require "json"
 require "concurrent"
 
@@ -12,7 +13,9 @@ class Chef
       attr_reader :http
       def initialize(endpoint = TELEMETRY_ENDPOINT)
         super()
-        @http = Net::HTTP.new(endpoint)
+        uri = URI(endpoint)
+        @http = Net::HTTP.new(uri.host, uri.port)
+        @http.use_ssl = uri.scheme == "https"
         @http.start
       end
 
