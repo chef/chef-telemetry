@@ -1,28 +1,25 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.8 -->
-## [v1.0.8](https://github.com/chef/chef-telemetry/tree/v1.0.8) (2020-05-29)
-
-#### Merged Pull Requests
-- Use Net::HTTP instead of HTTP [#35](https://github.com/chef/chef-telemetry/pull/35) ([clintoncwolfe](https://github.com/clintoncwolfe))
+<!-- latest_release -->
 <!-- latest_release -->
 
-<!-- release_rollup since=1.0.5 -->
-### Changes not yet released to rubygems.org
-
-#### Merged Pull Requests
-- Use Net::HTTP instead of HTTP [#35](https://github.com/chef/chef-telemetry/pull/35) ([clintoncwolfe](https://github.com/clintoncwolfe)) <!-- 1.0.8 -->
-- Update chefstyle requirement from = 0.10.0 to 1.0.5 [#34](https://github.com/chef/chef-telemetry/pull/34) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.7 -->
-- Avoid evals in the gemfile so we can use Dependabot [#33](https://github.com/chef/chef-telemetry/pull/33) ([tas50](https://github.com/tas50)) <!-- 1.0.6 -->
+<!-- release_rollup -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
+## [v1.0.8](https://github.com/chef/chef-telemetry/tree/v1.0.8) (2020-05-29)
+
+#### Merged Pull Requests
+- Avoid evals in the gemfile so we can use Dependabot [#33](https://github.com/chef/chef-telemetry/pull/33) ([tas50](https://github.com/tas50))
+- Update chefstyle requirement from = 0.10.0 to 1.0.5 [#34](https://github.com/chef/chef-telemetry/pull/34) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Use Net::HTTP instead of HTTP [#35](https://github.com/chef/chef-telemetry/pull/35) ([clintoncwolfe](https://github.com/clintoncwolfe))
+<!-- latest_stable_release -->
+
 ## [v1.0.5](https://github.com/chef/chef-telemetry/tree/v1.0.5) (2020-04-29)
 
 #### Merged Pull Requests
 - Upgrade http dependency [#30](https://github.com/chef/chef-telemetry/pull/30) ([duncaan](https://github.com/duncaan))
 - Directly address HTTP class [#31](https://github.com/chef/chef-telemetry/pull/31) ([tyler-ball](https://github.com/tyler-ball))
-<!-- latest_stable_release -->
 
 ## [v1.0.3](https://github.com/chef/chef-telemetry/tree/v1.0.3) (2020-02-13)
 
