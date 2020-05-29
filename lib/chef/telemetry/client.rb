@@ -1,4 +1,6 @@
-require "http"
+require "net/http"
+require "uri"
+require "json"
 require "concurrent"
 
 class Chef
@@ -11,11 +13,18 @@ class Chef
       attr_reader :http
       def initialize(endpoint = TELEMETRY_ENDPOINT)
         super()
-        @http = ::HTTP.persistent(endpoint)
+        uri = URI(endpoint)
+        @http = Net::HTTP.new(uri.host, uri.port)
+        @http.use_ssl = uri.scheme == "https"
+        @http.start
       end
 
       def fire(event)
-        http.post("/events", json: event).flush
+        req = Net::HTTP::Post.new("/events")
+        req["Content-Type"] = "application/json"
+        req.body = JSON.dump(event)
+        # TODO: @cwolfe use response and at least debug log status
+        http.request req
       end
     end
 
