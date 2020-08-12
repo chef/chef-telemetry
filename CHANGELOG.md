@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.13 -->
-## [v1.0.13](https://github.com/chef/chef-telemetry/tree/v1.0.13) (2020-08-11)
+<!-- latest_release 1.0.14 -->
+## [v1.0.14](https://github.com/chef/chef-telemetry/tree/v1.0.14) (2020-08-12)
 
 #### Merged Pull Requests
-- Update chefstyle requirement from 1.1.3 to 1.2.1 [#42](https://github.com/chef/chef-telemetry/pull/42) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Optimize requires for non-omnibus installs [#43](https://github.com/chef/chef-telemetry/pull/43) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
 <!-- release_rollup since=1.0.8 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Optimize requires for non-omnibus installs [#43](https://github.com/chef/chef-telemetry/pull/43) ([tas50](https://github.com/tas50)) <!-- 1.0.14 -->
 - Update chefstyle requirement from 1.1.3 to 1.2.1 [#42](https://github.com/chef/chef-telemetry/pull/42) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.13 -->
 - Remove redundant encoding comment [#40](https://github.com/chef/chef-telemetry/pull/40) ([tas50](https://github.com/tas50)) <!-- 1.0.12 -->
 - Update chefstyle requirement from 1.1.2 to 1.1.3 [#39](https://github.com/chef/chef-telemetry/pull/39) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.11 -->
