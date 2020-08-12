@@ -16,13 +16,13 @@
 #
 
 require_relative "telemetry/version"
-require "benchmark"
-require "forwardable"
-require "singleton"
-require "json"
+require "benchmark" unless defined?(Benchmark)
+require "forwardable" unless defined?(Forwardable)
+require "singleton" unless defined?(Singleton)
+require "json" unless defined?(JSON)
 require "digest/sha1"
-require "securerandom"
-require "yaml"
+require "securerandom" unless defined?(SecureRandom)
+require "yaml" unless defined?(YAML)
 
 class Chef
   # This definites the Telemeter interface. Implementation thoughts for
