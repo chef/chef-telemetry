@@ -20,7 +20,7 @@ require "benchmark" unless defined?(Benchmark)
 require "forwardable" unless defined?(Forwardable)
 require "singleton" unless defined?(Singleton)
 require "json" unless defined?(JSON)
-require "digest/sha1"
+require "digest/sha1" unless defined?(Digest::SHA1)
 require "securerandom" unless defined?(SecureRandom)
 require "yaml" unless defined?(YAML)
 
