@@ -1,9 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release -->
+<!-- latest_release 1.0.15 -->
+## [v1.0.15](https://github.com/chef/chef-telemetry/tree/v1.0.15) (2020-08-24)
+
+#### Merged Pull Requests
+- Gate another require and simplify expand_path [#44](https://github.com/chef/chef-telemetry/pull/44) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=1.0.14 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Gate another require and simplify expand_path [#44](https://github.com/chef/chef-telemetry/pull/44) ([tas50](https://github.com/tas50)) <!-- 1.0.15 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
