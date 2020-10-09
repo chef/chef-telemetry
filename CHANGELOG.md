@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.18 -->
-## [v1.0.18](https://github.com/chef/chef-telemetry/tree/v1.0.18) (2020-09-30)
+<!-- latest_release 1.0.19 -->
+## [v1.0.19](https://github.com/chef/chef-telemetry/tree/v1.0.19) (2020-10-09)
 
 #### Merged Pull Requests
-- Update chefstyle requirement from 1.4.2 to 1.4.3 [#48](https://github.com/chef/chef-telemetry/pull/48) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Update chefstyle requirement from 1.4.3 to 1.4.4 [#49](https://github.com/chef/chef-telemetry/pull/49) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
 <!-- latest_release -->
 
 <!-- release_rollup since=1.0.14 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Update chefstyle requirement from 1.4.3 to 1.4.4 [#49](https://github.com/chef/chef-telemetry/pull/49) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.19 -->
 - Update chefstyle requirement from 1.4.2 to 1.4.3 [#48](https://github.com/chef/chef-telemetry/pull/48) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.18 -->
 - Update chefstyle requirement from 1.3.2 to 1.4.2 [#47](https://github.com/chef/chef-telemetry/pull/47) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.17 -->
 - Update chefstyle requirement from 1.2.1 to 1.3.2 [#45](https://github.com/chef/chef-telemetry/pull/45) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.16 -->

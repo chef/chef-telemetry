@@ -1,5 +1,5 @@
 class Chef
   class Telemetry
-    VERSION = "1.0.18".freeze
+    VERSION = "1.0.19".freeze
   end
 end
