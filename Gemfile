@@ -10,7 +10,6 @@ group :debug do
 end
 
 group :test do
-  gem "parallel", "< 1.20" # remove this pin/dep when we drop ruby < 2.4
   gem "chefstyle", "1.5.8"
   gem "rake"
   gem "rspec", "~> 3.0"
@@ -20,4 +19,9 @@ group :docs do
   gem "github-markup"
   gem "redcarpet"
   gem "yard"
+end
+
+if Gem.ruby_version < Gem::Version.new("2.6")
+  # 16.7.23 required ruby 2.6+
+  gem "chef-utils", "< 16.7.23" # TODO: remove when we drop ruby 2.5
 end
