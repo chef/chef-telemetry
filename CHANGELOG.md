@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.28 -->
-## [v1.0.28](https://github.com/chef/chef-telemetry/tree/v1.0.28) (2021-02-16)
+<!-- latest_release 1.0.29 -->
+## [v1.0.29](https://github.com/chef/chef-telemetry/tree/v1.0.29) (2021-02-22)
 
 #### Merged Pull Requests
-- Update chefstyle requirement from 1.6.2 to 1.7.1 [#62](https://github.com/chef/chef-telemetry/pull/62) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Remove unused ffi-yajl dep [#63](https://github.com/chef/chef-telemetry/pull/63) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
 <!-- release_rollup since=1.0.14 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Remove unused ffi-yajl dep [#63](https://github.com/chef/chef-telemetry/pull/63) ([tas50](https://github.com/tas50)) <!-- 1.0.29 -->
 - Update chefstyle requirement from 1.6.2 to 1.7.1 [#62](https://github.com/chef/chef-telemetry/pull/62) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.28 -->
 - Update chefstyle requirement from 1.6.1 to 1.6.2 [#61](https://github.com/chef/chef-telemetry/pull/61) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.27 -->
 - Update chefstyle requirement from 1.5.9 to 1.6.1 [#60](https://github.com/chef/chef-telemetry/pull/60) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.26 -->
