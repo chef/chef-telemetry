@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.30 -->
-## [v1.0.30](https://github.com/chef/chef-telemetry/tree/v1.0.30) (2021-03-10)
+<!-- latest_release 1.0.31 -->
+## [v1.0.31](https://github.com/chef/chef-telemetry/tree/v1.0.31) (2021-04-07)
 
 #### Merged Pull Requests
-- Update chefstyle requirement from 1.7.1 to 1.7.2 [#64](https://github.com/chef/chef-telemetry/pull/64) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Update chefstyle requirement from 1.7.2 to 1.7.4 [#65](https://github.com/chef/chef-telemetry/pull/65) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
 <!-- latest_release -->
 
 <!-- release_rollup since=1.0.29 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Update chefstyle requirement from 1.7.2 to 1.7.4 [#65](https://github.com/chef/chef-telemetry/pull/65) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.31 -->
 - Update chefstyle requirement from 1.7.1 to 1.7.2 [#64](https://github.com/chef/chef-telemetry/pull/64) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.30 -->
 <!-- release_rollup -->
 
