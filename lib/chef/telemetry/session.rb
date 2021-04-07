@@ -1,4 +1,5 @@
 require "securerandom" unless defined?(SecureRandom)
+require "fileutils" unless defined?(FileUtils)
 require "chef-config/path_helper"
 
 class Chef
