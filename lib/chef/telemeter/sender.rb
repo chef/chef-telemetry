@@ -66,6 +66,7 @@ class Chef
           Telemeter::Log.info("Telemetry disabled, clearing any existing session captures without sending them.")
           session_files.each { |path| FileUtils.rm_rf(path) }
         end
+        require "fileutils" unless defined?(FileUtils)
         FileUtils.rm_rf(config[:session_file])
         Telemeter::Log.info("Terminating, nothing more to do.")
       rescue => e
