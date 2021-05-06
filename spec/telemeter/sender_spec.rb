@@ -59,9 +59,9 @@ RSpec.describe Chef::Telemeter::Sender do
     context "when telemetry is disabled" do
       let(:enabled_flag) { false }
       it "deletes session files without sending" do
-        expect(FileUtils).to receive(:rm_rf).with("file1")
-        expect(FileUtils).to receive(:rm_rf).with("file2")
-        expect(FileUtils).to receive(:rm_rf).with(config[:session_file])
+        expect(::FileUtils).to receive(:rm_rf).with("file1")
+        expect(::FileUtils).to receive(:rm_rf).with("file2")
+        expect(::FileUtils).to receive(:rm_rf).with(config[:session_file])
         expect(subject).to_not receive(:process_session)
         subject.run
       end
@@ -123,7 +123,7 @@ RSpec.describe Chef::Telemeter::Sender do
   describe "submit_session" do
     let(:telemetry) { instance_double("telemetry") }
     it "removes the telemetry session file and starts a new session, then submits each entry in the session" do
-      expect(FileUtils).to receive(:rm_rf).with(config[:session_file])
+      expect(::FileUtils).to receive(:rm_rf).with(config[:session_file])
       expect(Chef::Telemetry).to receive(:new).and_return telemetry
       expect(subject).to receive(:submit_entry).with(telemetry, { "event" => "action1" }, 1, 2)
       expect(subject).to receive(:submit_entry).with(telemetry, { "event" => "action2" }, 2, 2)
