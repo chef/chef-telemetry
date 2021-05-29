@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
   spec.files         = %w{LICENSE} + Dir.glob("lib/**/*")
   spec.require_paths = ["lib"]
 
+  spec.required_ruby_version = ">= 2.6"
   spec.add_development_dependency "bundler"
   spec.add_dependency "concurrent-ruby", "~> 1.0"
   spec.add_dependency "chef-config"
