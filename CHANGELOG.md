@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.0.33 -->
-## [v1.0.33](https://github.com/chef/chef-telemetry/tree/v1.0.33) (2021-04-29)
+<!-- latest_release 1.1.0 -->
+## [v1.1.0](https://github.com/chef/chef-telemetry/tree/v1.1.0) (2021-07-26)
 
 #### Merged Pull Requests
-- Upgrade to GitHub-native Dependabot [#68](https://github.com/chef/chef-telemetry/pull/68) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Drop support for EOL Ruby 2.4 [#76](https://github.com/chef/chef-telemetry/pull/76) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
 <!-- release_rollup since=1.0.29 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Drop support for EOL Ruby 2.4 [#76](https://github.com/chef/chef-telemetry/pull/76) ([tas50](https://github.com/tas50)) <!-- 1.1.0 -->
 - Upgrade to GitHub-native Dependabot [#68](https://github.com/chef/chef-telemetry/pull/68) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.33 -->
 - Update chefstyle requirement from 1.7.4 to 1.7.5 [#67](https://github.com/chef/chef-telemetry/pull/67) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.32 -->
 - Update chefstyle requirement from 1.7.2 to 1.7.4 [#65](https://github.com/chef/chef-telemetry/pull/65) ([dependabot-preview[bot]](https://github.com/dependabot-preview[bot])) <!-- 1.0.31 -->
