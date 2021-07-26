@@ -11,8 +11,8 @@ RSpec.describe Chef::Telemetry::Session do
   before do
     allow(ChefConfig::PathHelper).to receive(:home).with(".chef").and_return(File.join(home, ".chef"))
     allow(SecureRandom).to receive(:uuid).and_return(new_uuid)
-    expect(FileUtils).to receive(:touch).with(session_path).and_return true
-    allow(FileUtils).to receive(:mkdir_p).with(File.dirname(session_path)).and_return true
+    expect(::FileUtils).to receive(:touch).with(session_path).and_return true
+    allow(::FileUtils).to receive(:mkdir_p).with(File.dirname(session_path)).and_return true
 
     allow(File).to receive(:stat).with(session_path).and_return(stat_mock)
     allow(File).to receive(:open).with(session_path, "w").and_yield(write_mock)
