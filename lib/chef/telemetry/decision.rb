@@ -29,8 +29,6 @@ class Chef
         # The various things that have a say in whether telemetry should be enabled.
         @arg_decision = Decision::Argument.new(ARGV)
         @env_decision = Decision::Environment.new(ENV)
-
-        # These two are not yet used.
         @file_decision = Decision::File.new(config)
         @prompt_decision = Decision::Prompt.new(config)
       end
@@ -38,7 +36,8 @@ class Chef
       #
       # Methods for obtaining consent from the user.
       #
-      def check_and_persist(dir = Decision::File.default_file_location)
+      def check_and_persist(dir)
+        dir ||= Decision::File.default_file_location
         file_decision.local_dir = dir
 
         # If a decision is made by CLI arg, set runtime decision and do not persist
@@ -51,10 +50,6 @@ class Chef
         return @enabled = false if @env_decision.disable?
         return @enabled = true if @env_decision.enable?
 
-        # Stop here - code below this point is reserved for future opt-in / out work.
-        return @enabled if true
-
-        # rubocop: disable Lint/UnreachableCode
         # Check to see if a persistent decision is made by env but not yet persisted
         #  then persist it and set runtime decision
         logger.debug "Telemetry decision examining persistent ENV checks"
@@ -85,8 +80,8 @@ class Chef
         # rubocop: enable Lint/UnreachableCode
       end
 
-      def self.check_and_persist(dir = Decision::File.default_file_location, opts = {})
-        new(opts).check_and_persist(dir)
+      def self.check_and_persist(opts)
+        new(opts).check_and_persist(opts[:dir])
       end
 
       #
