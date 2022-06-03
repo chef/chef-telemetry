@@ -41,9 +41,6 @@ class Chef
       #
       def fetch_and_persist(product, version)
 
-        config[:dir] ||= LicenseIdFetcher::File.default_file_location
-        file_fetcher.local_dir = config[:dir]
-
         # TODO: handle non-persistent cases
 
         # If a fetch is made by CLI arg, persist and return
@@ -81,8 +78,17 @@ class Chef
 
       end
 
+      # Assumes fetch_and_persist has been called and succeeded
+      def fetch(_product, _version)
+        @arg_fetcher.fetch || @env_fetcher.fetch || @file_fetcher.fetch
+      end
+
       def self.fetch_and_persist(product, version, opts)
         new(opts).fetch_and_persist(product, version)
+      end
+
+      def self.fetch(product, version, opts)
+        new(opts).fetch(product, version)
       end
 
     end

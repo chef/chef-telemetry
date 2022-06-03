@@ -15,7 +15,7 @@ class Chef
 
         def fetch
           if env["CHEF_LICENSE_ID"]
-            if match = env["CHEF_LICENSE_ID"] =~ /^#{LICENSE_ID_REGEX}$/
+            if match = env["CHEF_LICENSE_ID"].match(/^#{LICENSE_ID_REGEX}$/)
               return match[1]
             else
               raise LicenseIdNotFetchedError.new("Malformed License ID passed in ENV variable CHEF_LICENSE_ID - should be #{LICENSE_ID_PATTERN_DESC}")

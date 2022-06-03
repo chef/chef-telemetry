@@ -20,6 +20,10 @@ class Chef
           @logger = opts[:logger]
           @contents_ivar = nil
           @location = nil
+
+          @opts[:dir] ||= LicenseIdFetcher::File.default_file_location
+          @local_dir = @opts[:dir]
+
         end
 
         def fetch
@@ -34,7 +38,7 @@ class Chef
           content[:update_time] = DateTime.now.to_s
           content[:license_id] = license_id
           @contents = content
-          dir = opts[:dir]
+          dir = @opts[:dir]
 
           begin
             msg = "Could not create directory for license_id file #{dir}"

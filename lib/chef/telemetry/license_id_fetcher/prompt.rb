@@ -70,6 +70,8 @@ class Chef
             return "Exit without setting a License ID"
           }
 
+          answer = "Exit without setting a License ID"
+
           # TODO: Test timeout on Windows
           begin
             Timeout.timeout(timeout, PromptTimeout) do
@@ -81,12 +83,14 @@ class Chef
                   "Exit without setting a License ID",
                 ]
               )
+              return answer
             end
           rescue PromptTimeout
             return handle_timeout.call
           end
 
           logger.debug "Saw answer '#{answer}'"
+          answer
         end
 
         def fetch_license_id_by_manual_entry
@@ -104,7 +108,7 @@ class Chef
           logger.debug("Attempting to request interactive prompt on TTY")
           prompt = TTY::Prompt.new(track_history: false, active_color: :bold, interrupt: :exit, output: output, input: input)
           answer = prompt.ask("License ID:")
-          unless match = answer =~ /^(q|Q)|#{LICENSE_ID_REGEX}$/
+          unless match = answer.match(/^(q|Q)|#{LICENSE_ID_REGEX}$/)
             # TODO: this could be more graceful
             puts "Unrecognized License ID format '#{answer}'"
             return fetch_license_id_by_manual_entry
@@ -147,7 +151,7 @@ class Chef
           prompt = TTY::Prompt.new(track_history: false, active_color: :bold, interrupt: :exit, output: output, input: input)
           answer = prompt.ask("Email Address, or 'q' to quit:")
 
-          unless match = answer =~ /^(q|Q)|(\S+\@\S+)$/ # TODO: validate an email address, LOL
+          unless match = answer.match(/^(q|Q)|(\S+\@\S+)$/) # TODO: validate an email address, LOL
             # TODO: this could be more graceful
             puts "Unrecognized email format '#{answer}'"
             return fetch_license_id_by_email_lookup
