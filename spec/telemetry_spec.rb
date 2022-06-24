@@ -29,8 +29,13 @@ RSpec.describe Chef::Telemetry do
   end
 
   describe "opted in" do
+    let(:default_endpoint) { "https://telemetry.chef.io" }
+
     before do
       expect(Chef::Telemetry::Decision).to receive(:opt_out?).and_return(false)
+      net_http_mock = double(Net::HTTP, 'use_ssl=': true, start: true, request: {})
+      uri = URI(default_endpoint)
+      allow(Net::HTTP).to receive(:new).with(uri.host, uri.port).and_return(net_http_mock)
     end
 
     it "sends an event" do
