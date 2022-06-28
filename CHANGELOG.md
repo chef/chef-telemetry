@@ -1,16 +1,17 @@
 # chef-telemetry change log
 
-<!-- latest_release 1.1.8 -->
-## [v1.1.8](https://github.com/chef/chef-telemetry/tree/v1.1.8) (2022-03-18)
+<!-- latest_release 1.1.9 -->
+## [v1.1.9](https://github.com/chef/chef-telemetry/tree/v1.1.9) (2022-06-28)
 
 #### Merged Pull Requests
-- add ruby 3.1 in verfiy pipeline [#88](https://github.com/chef/chef-telemetry/pull/88) ([jayashrig158](https://github.com/jayashrig158))
+- [INFC-138] Fixed the verify pipeline failures [#90](https://github.com/chef/chef-telemetry/pull/90) ([ashiqueps](https://github.com/ashiqueps))
 <!-- latest_release -->
 
 <!-- release_rollup since=1.1.1 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- [INFC-138] Fixed the verify pipeline failures [#90](https://github.com/chef/chef-telemetry/pull/90) ([ashiqueps](https://github.com/ashiqueps)) <!-- 1.1.9 -->
 - add ruby 3.1 in verfiy pipeline [#88](https://github.com/chef/chef-telemetry/pull/88) ([jayashrig158](https://github.com/jayashrig158)) <!-- 1.1.8 -->
 - Update chefstyle requirement from 2.1.3 to 2.2.0 [#85](https://github.com/chef/chef-telemetry/pull/85) ([dependabot[bot]](https://github.com/dependabot[bot])) <!-- 1.1.7 -->
 - Update chefstyle requirement from 2.1.1 to 2.1.3 [#84](https://github.com/chef/chef-telemetry/pull/84) ([dependabot[bot]](https://github.com/dependabot[bot])) <!-- 1.1.6 -->
